@@ -1,8 +1,15 @@
 import dispatcher from '../dispatcher'
 
-export function createCat(text) {
+export function createCat(payload) {
   dispatcher.dispatch({
     type: 'CREATE_CAT',
-    text
+    payload
+  })
+}
+
+export function updateCat(payload) {
+  dispatcher.dispatch({
+    type: 'UPDATE_CAT',
+    payload
   })
 }

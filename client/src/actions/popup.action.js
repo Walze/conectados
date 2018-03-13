@@ -1,9 +1,9 @@
 import dispatcher from '../dispatcher'
 
-export function updateFields(obj) {
+export function updateFields(payload) {
   dispatcher.dispatch({
     type: 'UPDATE_FIELDS',
-    obj
+    payload
   })
 }
 

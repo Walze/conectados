@@ -24,14 +24,18 @@ class CategoriaStore extends EventEmitter {
     this.emit('changes')
   }
 
+  updateCategoria(obj) {
+    this.emit('changes')
+  }
+
   handleActions(action) {
     switch (action.type) {
 
       case 'CREATE_CAT':
-        this.createCategoria(action.text)
+        this.createCategoria(action.payload)
         break;
       case 'UPDATE_CAT':
-        this.updateCategoria(action.text)
+        this.updateCategoria(action.payload)
         break;
 
       default: break

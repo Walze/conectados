@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import popUpStore from '../../Stores/popup.store'
 import { close as closePopUp } from '../../actions/popup.action'
+import * as CatActions from '../../actions/categoria.action'
 
 class PopUp extends Component {
 
@@ -23,6 +24,7 @@ class PopUp extends Component {
     popUp.fields[e.target.name] = e.target.value
 
     this.setState({ popUp })
+    CatActions.updateCat(popUp.fields)
   }
 
   componentDidMount() {

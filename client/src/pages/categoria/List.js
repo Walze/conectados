@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PopUp from './PopUp'
-import ListItem from './ListItem'
+import * as actions from '../../actions/popup.action'
 
 
 class List extends Component {
@@ -13,7 +13,12 @@ class List extends Component {
       <div>
         <div className='list-group'>
           {this.props.categorias.map(cat =>
-            <ListItem key={cat.nome} categoria={cat} />
+            <a
+              key={cat.nome}
+              onClick={() => actions.updateFields(cat)}
+              className='list-group-item list-group-item-action'>
+              {cat.nome}
+            </a>
           )}
         </div>
 
