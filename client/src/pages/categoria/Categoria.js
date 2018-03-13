@@ -34,10 +34,15 @@ class Categoria extends Component {
     newCat[e.target.name] = e.target.value
 
     this.setState({ newCat })
-  }
+  }  
 
   create(text) {
-    actions.createCat(text)
+    actions.createCat(Object.assign({}, text))
+
+    let newCat = this.state.newCat
+    newCat.nome = ''
+
+    this.setState({ newCat })
   }
 
   render() {
