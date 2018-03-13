@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import List from './List'
-
+import categoriaStore from './Store'
 import './categoria.sass'
+
+import * as actions from './Actions'
 
 class Categoria extends Component {
   constructor(props) {
@@ -9,11 +11,29 @@ class Categoria extends Component {
 
     props.displayNav(true)
 
-    window.dis = this
-
     this.state = {
-      categorias: [{ 'id': 5, 'nome': 'kkfghkkghjfghjkkkk' }, { 'id': 6, 'nome': 'niceboi2' }, { 'id': 4, 'nome': 'testaroo' }, { 'id': 2, 'nome': 'teste3' }]
+      categorias: categoriaStore.getCats(),
+      newCat: { nome: '' }
     }
+  }
+
+  componentDidMount() {
+    categoriaStore.on('changes', () => this.setState({ categorias: categoriaStore.getCats() }))
+  }
+
+  componentWillUnmount() {
+    categoriaStore.removeAllListeners()
+  }
+
+  handleChange(e) {
+    let newCat = this.state.newCat
+    newCat[e.target.name] = e.target.value
+
+    this.setState({ newCat })
+  }
+
+  create(text) {
+    actions.createTodo(text)
   }
 
   render() {
@@ -25,11 +45,18 @@ class Categoria extends Component {
           <h4>Criar nova Categoria</h4>
 
           <div className='form-group'>
-            <input type='text' className='form-control' placeholder='Digite Aqui' />
+            <input
+              type='text'
+              className='form-control'
+              name='nome'
+              value={this.state.newCat.nome}
+              onChange={e => this.handleChange(e)}
+            />
+
             <small className='form-text text-muted'>Tenha certeza de que ela já não existe.</small>
           </div>
 
-          <button type='submit' className='btn btn-primary'>Adicionar</button>
+          <button type='submit' onClick={() => this.create(this.state.newCat)} className='btn btn-primary'>Adicionar</button>
 
           <br />
           <br />
