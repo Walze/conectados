@@ -13,3 +13,10 @@ export function updateCat(payload) {
     payload
   })
 }
+
+export function deleteCat(payload) {
+  dispatcher.dispatch({
+    type: 'DELETE_CAT',
+    payload
+  })
+}

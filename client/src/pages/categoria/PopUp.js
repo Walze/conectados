@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import popUpStore from '../../Stores/popup.store'
 import { close as closePopUp } from '../../actions/popup.action'
-import { updateCat } from '../../actions/categoria.action'
+import { updateCat, deleteCat } from '../../actions/categoria.action'
 
 class PopUp extends Component {
 
@@ -36,6 +36,12 @@ class PopUp extends Component {
 
   save() {
     updateCat(this.state.popUp.fields)
+    closePopUp()
+  }
+
+  delete() {
+    if (window.confirm('Tem Certeza?'))
+      deleteCat(this.state.popUp.fields)
     closePopUp()
   }
 

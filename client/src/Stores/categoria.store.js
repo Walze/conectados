@@ -31,6 +31,13 @@ class CategoriaStore extends EventEmitter {
     this.emit('changes')
   }
 
+  deleteCategoria(obj) {
+    const cat = this._categorias.findIndex(cat => cat.id === obj.id)
+    this._categorias.splice(cat, 1)
+
+    this.emit('changes')
+  }
+
   handleActions(action) {
     switch (action.type) {
 
@@ -39,6 +46,10 @@ class CategoriaStore extends EventEmitter {
         break;
       case 'UPDATE_CAT':
         this.updateCategoria(action.payload)
+        break;
+
+      case 'DELETE_CAT':
+        this.deleteCategoria(action.payload)
         break;
 
       default: break
