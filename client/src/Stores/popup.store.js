@@ -14,7 +14,7 @@ class PopUpStore extends EventEmitter {
   }
 
   getState() {
-    return this._state
+    return JSON.parse(JSON.stringify(this._state))
   }
 
   close() {
@@ -26,7 +26,6 @@ class PopUpStore extends EventEmitter {
     this._state.fields = obj
     this._state.hidden = false
 
-    console.log(this._state, obj)
     this.emit('changes')
   }
 

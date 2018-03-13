@@ -25,6 +25,9 @@ class CategoriaStore extends EventEmitter {
   }
 
   updateCategoria(obj) {
+    const cat = this._categorias.find(cat => cat.id === obj.id)
+    cat.nome = obj.nome
+
     this.emit('changes')
   }
 

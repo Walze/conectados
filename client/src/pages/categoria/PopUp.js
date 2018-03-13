@@ -1,22 +1,24 @@
 import React, { Component } from 'react'
 import popUpStore from '../../Stores/popup.store'
 import { close as closePopUp } from '../../actions/popup.action'
-import * as CatActions from '../../actions/categoria.action'
+import { updateCat } from '../../actions/categoria.action'
 
 class PopUp extends Component {
 
   constructor(props) {
     super(props)
 
-
     this.state = {
       popUp: popUpStore.getState()
     }
   }
 
-  close(e = false) {
-    if (e.target === e.currentTarget || e === false)
-      closePopUp()
+  componentDidMount() {
+    popUpStore.on('changes', () => this.setState({ popUp: popUpStore.getState() }))
+  }
+
+  componentWillUnmount() {
+    popUpStore.removeAllListeners()
   }
 
   handleChange(e) {
@@ -24,25 +26,25 @@ class PopUp extends Component {
     popUp.fields[e.target.name] = e.target.value
 
     this.setState({ popUp })
-    CatActions.updateCat(popUp.fields)
   }
 
-  componentDidMount() {
-    popUpStore.on('changes', () => {
-      this.setState({ popUp: popUpStore.getState() })
-    })
+  close(e = false) {
+    if (e.target === e.currentTarget || e === false) {
+      closePopUp()
+    }
   }
 
-  componentWillUnmount() {
-    popUpStore.removeAllListeners()
+  save() {
+    updateCat(this.state.popUp.fields)
+    closePopUp()
   }
 
   render() {
-    const inputs = []
+    this.inputs = []
 
     for (let prop in this.state.popUp.fields) {
       if (prop !== 'id')
-        inputs.push(
+        this.inputs.push(
           <input
             type="text"
             className="form-control"
@@ -63,12 +65,12 @@ class PopUp extends Component {
 
           <div className="form-group">
 
-            {inputs}
+            {this.inputs}
 
             <br />
 
-            <button type="submit" className="col-md-12 btn btn-success">Alterar</button>
-            <button type="submit" className="col-md-12 btn btn-danger">Remover</button>
+            <button onClick={() => this.save()} type="submit" className="col-md-12 btn btn-success">Alterar</button>
+            <button onClick={() => this.delete()} type="submit" className="col-md-12 btn btn-danger">Remover</button>
           </div>
         </div>
 
