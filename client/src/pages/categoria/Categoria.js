@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
+
 import List from './List'
-import categoriaStore from './Store'
 import './categoria.sass'
 
-import * as actions from './Actions'
+import categoriaStore from '../../Stores/categoria.store'
+import * as actions from '../../actions/categoria.action'
 
 class Categoria extends Component {
   constructor(props) {
@@ -18,7 +19,10 @@ class Categoria extends Component {
   }
 
   componentDidMount() {
-    categoriaStore.on('changes', () => this.setState({ categorias: categoriaStore.getCats() }))
+    categoriaStore.on('changes', () => {
+      console.log('changes categoria')
+      this.setState({ categorias: categoriaStore.getCats() })
+    })
   }
 
   componentWillUnmount() {
@@ -33,7 +37,7 @@ class Categoria extends Component {
   }
 
   create(text) {
-    actions.createTodo(text)
+    actions.createCat(text)
   }
 
   render() {

@@ -5,7 +5,7 @@ import ListItem from './ListItem'
 
 class List extends Component {
 
-  
+
 
   render() {
 
@@ -13,11 +13,11 @@ class List extends Component {
       <div>
         <div className='list-group'>
           {this.props.categorias.map(cat =>
-            <ListItem popUp={this.popUp} key={cat.id} categoria={cat} />
+            <ListItem key={cat.nome} categoria={cat} />
           )}
         </div>
 
-        <PopUp categorias={this.props.categorias} ref={inst => this.popUp = inst} />
+        <PopUp />
       </div>
     )
   }
