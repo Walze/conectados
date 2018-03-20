@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
 import Categoria from './pages/categoria/Categoria'
 import Inicio from './pages/Inicio'
-import Licao from './pages/Licao'
+import Licao from './pages/licao/Licao'
 
 
 class App extends Component {

@@ -13,25 +13,29 @@ class CategoriaStore extends EventEmitter {
       { id: 4, nome: 'testaroo' },
       { id: 2, nome: 'teste3' }
     ]
+
+    window.cat = this
   }
 
   getCats() {
     return this._categorias
   }
 
-  createCategoria(text) {
+  create(text) {
+    text.id = (Math.random() * 100).toString(36);
+    console.log(text)
     this._categorias.push(text)
     this.emit('changes')
   }
 
-  updateCategoria(obj) {
+  update(obj) {
     const cat = this._categorias.find(cat => cat.id === obj.id)
     cat.nome = obj.nome
 
     this.emit('changes')
   }
 
-  deleteCategoria(obj) {
+  delete(obj) {
     const cat = this._categorias.findIndex(cat => cat.id === obj.id)
     this._categorias.splice(cat, 1)
 
@@ -42,14 +46,15 @@ class CategoriaStore extends EventEmitter {
     switch (action.type) {
 
       case 'CREATE_CAT':
-        this.createCategoria(action.payload)
+        this.create(action.payload)
         break;
+
       case 'UPDATE_CAT':
-        this.updateCategoria(action.payload)
+        this.update(action.payload)
         break;
 
       case 'DELETE_CAT':
-        this.deleteCategoria(action.payload)
+        this.delete(action.payload)
         break;
 
       default: break
