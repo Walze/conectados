@@ -8,6 +8,12 @@ export function updateFields(payload) {
   })
 }
 
+export function open() {
+  dispatcher.dispatch({
+    type: 'OPEN_POPUP'
+  })
+}
+
 export function close() {
   dispatcher.dispatch({
     type: 'CLOSE_POPUP'

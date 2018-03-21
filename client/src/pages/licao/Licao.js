@@ -10,14 +10,13 @@ class Licao extends Component {
 
     this.state = {
       cards: [
-        { titulo: 'Lição #23', sub_titulo: 'Subtítulo da lição', desc: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempore, nihil.' },
-        { titulo: 'Lição #24', sub_titulo: 'Subtítulo da lição', desc: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempore, nihil.' },
-        { titulo: 'Lição #25', sub_titulo: 'Subtítulo da lição', desc: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempore, nihil.' },
-        { titulo: 'Lição #26', sub_titulo: 'Subtítulo da lição', desc: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempore, nihil.' },
+        { titulo: 'Lição #23', desc: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempore, nihil.', categoria_id: 'Categoria1' },
+        { titulo: 'Lição #24', desc: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempore, Lorem ipsum dolor sit amet consectetur adipisicing elit. nihil.', categoria_id: 'Categoria2' },
+        { titulo: 'Lição #25', desc: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempore, nihil.', categoria_id: 'Categoria3' },
+        { titulo: 'Lição #26', desc: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempore, nihil.', categoria_id: 'Categoria4' },
       ],
       newLicao: {
         titulo: '',
-        sub_titulo: '',
         desc: ''
       },
       criar: true
@@ -80,7 +79,8 @@ class Licao extends Component {
 
               </div>
 
-              <button type='submit' onClick={() => this.create(this.state.newLicao)} className='btn btn-success'>Adicionar</button>
+              <button type='submit' onClick={() => this.create(this.state.newLicao)} className='btn btn-success mb-2'>Adicionar</button>
+              <button className='btn btn-danger' onClick={() => this.criarBotao()}>Fechar</button>
             </div>
           </div>
         </div>

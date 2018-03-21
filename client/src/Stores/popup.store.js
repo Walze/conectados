@@ -22,11 +22,14 @@ class PopUpStore extends EventEmitter {
     this.emit('changes')
   }
 
+  open() {
+    this._state.hidden = false
+    this.emit('changes')
+  }
+
   updateState(obj) {
     this._state.fields = obj
-    this._state.hidden = false
-
-    this.emit('changes')
+    this.open()
   }
 
   handleActions(action) {
@@ -34,6 +37,11 @@ class PopUpStore extends EventEmitter {
 
       case 'UPDATE_FIELDS':
         this.updateState(action.payload)
+        break;
+
+      case 'OPEN_POPUP':
+        console.log('penp')
+        this.open()
         break;
 
       case 'CLOSE_POPUP':
