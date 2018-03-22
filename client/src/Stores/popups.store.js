@@ -24,12 +24,7 @@ class PopUpsStore extends EventEmitter {
 
   }
   create() {
-
-    let id = (Math.random())
-
-    while (this.popups.findObj('id', id))
-      id = (Math.random())
-
+    let id = this.popups.length
 
     this.popups.push(new Popup(id, true))
 
@@ -37,7 +32,7 @@ class PopUpsStore extends EventEmitter {
   }
 
   getState(id) {
-    return this.popups.findObj('id', id)
+    return Object.assign({}, this.popups.findObj('id', id))
   }
 
   close(id) {
@@ -55,18 +50,8 @@ class PopUpsStore extends EventEmitter {
     this.emit('changes')
   }
 
-  updateState(obj) {
-    console.log(obj, 'aaaaaaaaaaaaa')
-    this.hidden.fields = obj
-    this.open()
-  }
-
   handleActions(action) {
     switch (action.type) {
-
-      case 'UPDATE_FIELDS':
-        this.updateState(action.payload)
-        break;
 
       case 'OPEN_POPUP':
         this.open(action.payload)

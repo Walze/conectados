@@ -19,7 +19,7 @@ class Licoes extends Component {
 
   updateCurrentLicao(currentLicao) {
     this.setState({ currentLicao })
-    popUp.open(this.popup.state.id)
+    popUp.open(this.cardsPopup.state.id)
   }
 
   render() {
@@ -48,7 +48,7 @@ class Licoes extends Component {
           )}
         </div>
 
-        <PopUp ref={ref => this.popup = ref} cssClasses={'col-md-11 overflow'}>
+        <PopUp ref={ref => this.cardsPopup = ref} cssClasses={'col-md-11 overflow'}>
           <Cards />
         </PopUp>
       </div >
