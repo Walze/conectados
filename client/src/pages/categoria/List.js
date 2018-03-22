@@ -15,6 +15,8 @@ class List extends Component {
         nome: ''
       }
     }
+
+    window.list = this
   }
 
 
@@ -27,17 +29,17 @@ class List extends Component {
 
   updatePopUp(cat) {
     this.setState({ popUpCurrentCat: cat })
-    popUp.open()
+    popUp.open(this.popup.state.id)
   }
 
   save() {
     updateCat(this.state.popUpCurrentCat)
-    popUp.close()
+    popUp.close(this.popup.state.id)
   }
 
   delete() {
     deleteCat(this.state.popUpCurrentCat)
-    popUp.close()
+    popUp.close(this.popup.state.id)
   }
 
 
@@ -56,7 +58,7 @@ class List extends Component {
           )}
         </div>
 
-        <PopUp>
+        <PopUp ref={ref => this.popup = ref}>
           <h4>Editar/Deletar</h4>
 
           <br />
@@ -77,7 +79,7 @@ class List extends Component {
             <button onClick={() => this.delete()} type="submit" className="col-md-12 btn btn-danger">Remover</button>
           </div>
         </PopUp>
-        
+
       </div>
     )
   }

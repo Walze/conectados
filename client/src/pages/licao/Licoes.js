@@ -19,7 +19,7 @@ class Licoes extends Component {
 
   updateCurrentLicao(currentLicao) {
     this.setState({ currentLicao })
-    popUp.open(this.popup.state.popUp.id)
+    popUp.open(this.popup.state.id)
   }
 
   render() {

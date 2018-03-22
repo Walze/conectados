@@ -3,9 +3,9 @@ import { EventEmitter } from 'events'
 
 
 class Popup {
-  constructor(id, state) {
+  constructor(id, hidden) {
     this.id = id
-    this.state = state
+    this.hidden = hidden
   }
 }
 
@@ -14,9 +14,6 @@ class PopUpsStore extends EventEmitter {
   constructor() {
     super()
 
-    this._state = {
-      hidden: true
-    }
 
     this.popups = []
     this.popups.findObj = function (prop, value) {
@@ -26,13 +23,17 @@ class PopUpsStore extends EventEmitter {
     }
 
   }
+  create() {
 
-  create(id) {
-    const stateCopy = JSON.parse(JSON.stringify(this._state))
+    let id = (Math.random())
 
-    this.popups.push(new Popup(id, stateCopy))
+    while (this.popups.findObj('id', id))
+      id = (Math.random())
 
-    return new Popup(id, stateCopy)
+
+    this.popups.push(new Popup(id, true))
+
+    return new Popup(id, true)
   }
 
   getState(id) {
@@ -42,23 +43,21 @@ class PopUpsStore extends EventEmitter {
   close(id) {
     const popup = this.popups.findObj('id', id)
 
-    popup.state.hidden = true
+    popup.hidden = true
 
     this.emit('changes')
   }
 
   open(id) {
     const popup = this.popups.findObj('id', id)
-    console.warn(popup)
-
-    popup.state.hidden = false
+    popup.hidden = false
 
     this.emit('changes')
   }
 
   updateState(obj) {
     console.log(obj, 'aaaaaaaaaaaaa')
-    this._state.fields = obj
+    this.hidden.fields = obj
     this.open()
   }
 
