@@ -39,17 +39,18 @@ class Licoes extends Component {
                   {licao.titulo}
                 </h5>
                 <p className="card-text">{licao.desc}</p>
-
               </div>
+
               <div className="card-footer">
                 <small className="text-muted">{licao.categoria_id}</small>
               </div>
+              
             </div>
           )}
         </div>
 
         <PopUp ref={ref => this.cardsPopup = ref} cssClasses={'col-md-11 overflow'}>
-          <Cards />
+          <Cards licao={this.state.currentLicao} />
         </PopUp>
       </div >
     )
