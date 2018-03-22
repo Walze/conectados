@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PopUp from '../licao/PopUp'
-import * as popUp from '../../actions/popup.action'
+import * as popUp from '../../actions/popups.action'
 import { updateCat, deleteCat } from '../../actions/categoria.action'
 
 
