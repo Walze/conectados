@@ -3,19 +3,19 @@ import PopUp from './PopUp'
 import * as popUp from '../../actions/popup.action'
 
 
-class Cards extends Component {
+class Licoes extends Component {
 
   constructor() {
     super()
 
 
     this.state = {
-      currentCard: 1
+      currentLicao: null
     }
   }
 
-  updateCurrentCard(currentCard) {
-    this.setState({ currentCard })
+  updateCurrentLicao(currentLicao) {
+    this.setState({ currentLicao })
     popUp.open()
   }
 
@@ -24,33 +24,33 @@ class Cards extends Component {
     return (
       <div>
         <div className='cards d-flex flex-wrap'>
-          {this.props.cards.map(card =>
+          {this.props.licoes.map(licao =>
             <div
-              key={card.titulo}
+              key={licao.titulo}
               className="card m-4 pointer list-group-item-action"
               style={{ width: '320px' }}
-              onClick={() => this.updateCurrentCard(card.titulo)}
+              onClick={() => this.updateCurrentLicao(licao.titulo)}
             >
               <div className="card-body">
                 <h5 className="card-title text-center mb-2 font-weight-bold">
-                  {card.titulo}
+                  {licao.titulo}
                 </h5>
-                <p className="card-text">{card.desc}</p>
+                <p className="card-text">{licao.desc}</p>
 
               </div>
               <div className="card-footer">
-                <small className="text-muted">{card.categoria_id}</small>
+                <small className="text-muted">{licao.categoria_id}</small>
               </div>
             </div>
           )}
         </div>
 
         <PopUp>
-          currentCard: {this.state.currentCard}
+          currentLicao: {this.state.currentLicao}
         </PopUp>
       </div >
     )
   }
 }
 
-export default Cards
+export default Licoes

@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
 import Categoria from './pages/categoria/Categoria'
 import Inicio from './pages/Inicio'
-import Licao from './pages/licao/Licao'
+import LicoesPage from './pages/licao/LicoesPage'
 
 
 class App extends Component {
@@ -43,7 +43,7 @@ class App extends Component {
 
           <Route exact path="/" render={props => <Inicio displayNav={this.displayNav} />} />
           <Route path="/categoria" render={props => <Categoria displayNav={this.displayNav} />} />
-          <Route path="/licao" render={props => <Licao displayNav={this.displayNav} />} />
+          <Route path="/licao" render={props => <LicoesPage displayNav={this.displayNav} />} />
 
 
         </div>

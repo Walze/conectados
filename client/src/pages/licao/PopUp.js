@@ -20,13 +20,6 @@ class PopUp extends Component {
     popUpStore.removeAllListeners()
   }
 
-  handleChange(e) {
-    let popUp = Object.assign({}, this.state.popUp)
-    popUp.fields[e.target.name] = e.target.value
-
-    this.setState({ popUp })
-  }
-
   close(e = false) {
     if (e.target === e.currentTarget || e === false) {
       closePopUp()

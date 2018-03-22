@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import Cards from './Cards'
+import Licoes from './Licoes'
 
-class Licao extends Component {
+class LicoesPage extends Component {
   constructor(props) {
     super(props);
 
@@ -9,7 +9,7 @@ class Licao extends Component {
 
 
     this.state = {
-      cards: [
+      licoes: [
         { titulo: 'Lição #23', desc: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempore, nihil.', categoria_id: 'Categoria1' },
         { titulo: 'Lição #24', desc: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempore, Lorem ipsum dolor sit amet consectetur adipisicing elit. nihil.', categoria_id: 'Categoria2' },
         { titulo: 'Lição #25', desc: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempore, nihil.', categoria_id: 'Categoria3' },
@@ -85,11 +85,11 @@ class Licao extends Component {
           </div>
         </div>
 
-        <Cards cards={this.state.cards} />
+        <Licoes licoes={this.state.licoes} />
 
       </div>
     )
   }
 }
 
-export default Licao
+export default LicoesPage
