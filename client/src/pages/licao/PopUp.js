@@ -29,8 +29,8 @@ class PopUp extends Component {
   render() {
 
     return (
-      <div onClick={e => this.close(e)} className="pop-up" hidden={this.state.hidden}>
-        <div style={this.props.styles} className={'window card col-md-6 col-sm-11 ' + this.props.cssClasses}>
+      <div style={{ zIndex: this.state.id + 101 }} onClick={e => this.close(e)} className="pop-up" hidden={this.state.hidden}>
+        <div style={this.props.styles} className={`window card col-md-6 col-sm-11 ${this.props.cssClasses || ''}`}>
           {this.props.children}
         </div>
 
