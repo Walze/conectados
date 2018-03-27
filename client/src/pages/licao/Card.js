@@ -26,7 +26,10 @@ class Card extends Component {
           <div className='form-group'>
             <input type='number' className='form-control' placeholder='Digite o número do card que deseja trocar de posição com esse' />
 
-            <button className='btn btn-primary'>Salvar</button>
+            <div className="d-flex justify-content-between p-1">
+              <button className='btn btn-primary'>Salvar</button>
+              <button className='btn btn-danger'>Deletar</button>
+            </div>
           </div>
 
         </div>

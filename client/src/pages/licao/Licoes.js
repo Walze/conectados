@@ -11,7 +11,11 @@ class Licoes extends Component {
 
 
     this.state = {
-      currentLicao: {}
+      currentLicao: {
+        titulo: "",
+        desc: "",
+        categoria_id: ""
+      }
     }
 
     window.licoes = this
@@ -44,7 +48,7 @@ class Licoes extends Component {
               <div className="card-footer">
                 <small className="text-muted">{licao.categoria_id}</small>
               </div>
-              
+
             </div>
           )}
         </div>
