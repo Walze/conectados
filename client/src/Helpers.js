@@ -8,6 +8,13 @@ export function makeid(sz) {
   return text;
 }
 
+// eslint-disable-next-line
+Array.prototype.findObj = function (prop, value) {
+  for (var i = 0, len = this.length; i < len; i++)
+    if (String(this[i][prop]) === String(value))
+      return this[i]
+}
+
 export const array = {
   Push(arr, newEntry) {
     return [...arr, newEntry]

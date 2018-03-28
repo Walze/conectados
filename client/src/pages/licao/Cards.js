@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import * as popUp from '../../actions/popups.action'
 import PopUp from './PopUp'
 import Card from './Card'
+import { Card as CardInterface } from '../../interfaces'
 
 class Cards extends Component {
 
@@ -9,7 +10,7 @@ class Cards extends Component {
     super(props)
 
     this.state = {
-      currentCard: {}
+      currentCard: new CardInterface()
     }
   }
 

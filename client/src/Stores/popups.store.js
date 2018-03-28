@@ -16,12 +16,6 @@ class PopUpsStore extends EventEmitter {
 
 
     this.popups = []
-    this.popups.findObj = function (prop, value) {
-      for (var i = 0, len = this.length; i < len; i++)
-        if (String(this[i][prop]) === String(value))
-          return this[i]
-    }
-
   }
   create() {
     let id = this.popups.length

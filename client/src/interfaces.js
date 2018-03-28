@@ -20,8 +20,9 @@ export class Card {
   constructor(obj) {
     conditioner(this, obj, () => {
       this.text = ''
-      this.images = []
+      this.images = ['']
       this.pos = 0
+      this.licao_id = 0
     })
   }
 }

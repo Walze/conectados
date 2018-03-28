@@ -5,7 +5,7 @@ import * as popUp from '../../actions/popups.action'
 import PopUp from './PopUp'
 
 import { Card } from '../../interfaces'
-
+import { add as addCard } from '../../actions/cards.action'
 
 class Licao extends Component {
 
@@ -13,7 +13,6 @@ class Licao extends Component {
     super()
 
     this.state = {
-      currentCard: {},
       newCard: new Card(),
       editNome: false
     }
@@ -25,10 +24,20 @@ class Licao extends Component {
     this.setState({ editNome: !this.state.editNome }, () => this.refs.nomeInput.focus())
   }
 
-  handleChange(e) {
+  handleChange(e, index = null) {
     let newCard = this.state.newCard
-    newCard[e.target.name] = e.target.value
+
+    if (e.target.name !== 'images')
+      newCard[e.target.name] = e.target.value
+    else
+      newCard[e.target.name][index] = e.target.value
+
+    newCard.licao_id = this.props.licao.id
     this.setState({ newCard })
+  }
+
+  createCard(card) {
+    addCard(card)
   }
 
   render() {
@@ -83,19 +92,20 @@ class Licao extends Component {
                       onChange={e => this.handleChange(e)}
                     />
 
-                    <div class="custom-file mb-1">
-                      <input type="file" class="custom-file-input"
+                    <div className="mb-1">
+                      <input
+                        type="file"
+                        name='images'
                         value={this.state.newCard.images[0]}
-                        onChange={e => this.handleChange(e)}
+                        onChange={e => this.handleChange(e, 0)}
                       />
-                      <label class="custom-file-label">Choose file</label>
                     </div>
 
                   </div>
 
                   <button
                     type='submit'
-                    onClick={() => this.create(this.state.newLicao)}
+                    onClick={() => this.createCard(this.state.newCard)}
                     className='col-sm-12 btn btn-primary'
                   >
                     Adicionar

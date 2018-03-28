@@ -11,7 +11,7 @@ class LicoesPage extends Component {
 
 
     this.state = {
-      newLicao: new Licao,
+      newLicao: new Licao(),
       criar: true
     }
   }

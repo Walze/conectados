@@ -3,7 +3,6 @@ import PopUp from './PopUp'
 import Licao from './Licao'
 import licoesStore from '../../Stores/licoes.store'
 import * as popUp from '../../actions/popups.action'
-import * as licoesAction from '../../actions/licoes.action'
 import { Licao as LicaoInterface } from '../../interfaces'
 
 class Licoes extends Component {
