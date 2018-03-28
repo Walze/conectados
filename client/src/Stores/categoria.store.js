@@ -14,7 +14,6 @@ class CategoriaStore extends EventEmitter {
       { id: 2, nome: 'teste3' }
     ]
 
-    window.cat = this
   }
 
   getCats() {

@@ -9,12 +9,6 @@ class LicoesPage extends Component {
 
 
     this.state = {
-      licoes: [
-        { titulo: 'Lição #23', desc: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempore, nihil.', categoria_id: 'Categoria1' },
-        { titulo: 'Lição #24', desc: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempore, Lorem ipsum dolor sit amet consectetur adipisicing elit. nihil.', categoria_id: 'Categoria2' },
-        { titulo: 'Lição #25', desc: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempore, nihil.', categoria_id: 'Categoria3' },
-        { titulo: 'Lição #26', desc: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempore, nihil.', categoria_id: 'Categoria4' },
-      ],
       newLicao: {
         titulo: '',
         desc: ''
@@ -85,7 +79,7 @@ class LicoesPage extends Component {
           </div>
         </div>
 
-        <Licoes licoes={this.state.licoes} />
+        <Licoes />
 
       </div>
     )

@@ -1,28 +1,40 @@
 import React, { Component } from 'react'
 import PopUp from './PopUp'
-import Cards from './Cards'
+import Licao from './Licao'
 import * as popUp from '../../actions/popups.action'
-
+import * as licoesAction from '../../actions/licoes.action'
+import licoesStore from '../../Stores/licoes.store'
 
 class Licoes extends Component {
 
   constructor() {
     super()
 
-
     this.state = {
-      currentLicao: {
+      licoes: licoesStore.get(),
+      activeLicao: {
         titulo: "",
         desc: "",
-        categoria_id: ""
-      }
+        categoria_id: "",
+        cards: []
+      },
+
     }
 
-    window.licoes = this
   }
 
-  updateCurrentLicao(currentLicao) {
-    this.setState({ currentLicao })
+  componentDidMount() {
+    licoesStore.on('changes', () => {
+      this.setState({ licoes: licoesStore.get() })
+    })
+  }
+
+  componentWillUnmount() {
+    licoesStore.removeAllListeners()
+  }
+
+  setActiveLicao(activeLicao) {
+    this.setState({ activeLicao })
     popUp.open(this.cardsPopup.state.id)
   }
 
@@ -31,12 +43,12 @@ class Licoes extends Component {
     return (
       <div>
         <div className='cards d-flex flex-wrap'>
-          {this.props.licoes.map(licao =>
+          {this.state.licoes.map(licao =>
             <div
               key={licao.titulo}
               className="card m-4 pointer list-group-item-action"
               style={{ width: '320px' }}
-              onClick={() => this.updateCurrentLicao(licao)}
+              onClick={() => this.setActiveLicao(licao)}
             >
               <div className="card-body">
                 <h5 className="card-title text-center mb-2 font-weight-bold">
@@ -54,7 +66,7 @@ class Licoes extends Component {
         </div>
 
         <PopUp ref={ref => this.cardsPopup = ref} cssClasses={'col-md-11 overflow'}>
-          <Cards licao={this.state.currentLicao} />
+          <Licao licao={this.state.activeLicao} />
         </PopUp>
       </div >
     )
