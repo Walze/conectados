@@ -92,4 +92,4 @@ class LicoesStore extends EventEmitter {
 const licoesStore = new LicoesStore()
 dispatcher.register(licoesStore.handleActions.bind(licoesStore))
 
-export default licoesStore;
+export default licoesStore

@@ -9,12 +9,12 @@ import { add as addCard } from '../../actions/cards.action'
 
 class Licao extends Component {
 
-  constructor() {
-    super()
-
+  constructor(props) {
+    super(props)
     this.state = {
       newCard: new Card(),
-      editNome: false
+      editNome: false,
+      newTitulo: this.props.licao.titulo
     }
 
     window.licao = this
@@ -40,6 +40,10 @@ class Licao extends Component {
     addCard(card)
   }
 
+  newTitulo(e) {
+    this.setState({ newTitulo: e.target.value })
+  }
+
   render() {
     return (
       <div>
@@ -51,16 +55,19 @@ class Licao extends Component {
             <h1
               onClick={() => this.editNome()}
               hidden={this.state.editNome}
-              className='display-4 text-center'>
+              className='display-4 text-center'
+            >
               {this.props.licao.titulo}
             </h1>
 
             <input
               ref='nomeInput'
               onBlur={() => this.editNome()}
+              onChange={e => this.newTitulo(e)}
+              nome='newTitulo'
               hidden={!this.state.editNome}
               className='form-control form-control-lg display-4 text-center'
-              value={this.props.licao.titulo}
+              value={this.state.newTitulo}
             />
 
             <small hidden={this.state.editNome} className='text-secondary text-center'>
