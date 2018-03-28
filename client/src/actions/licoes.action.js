@@ -1,7 +1,8 @@
 import dispatcher from '../dispatcher'
 
-export function get() {
+export function add(payload) {
   dispatcher.dispatch({
-    type: 'GET_LICOES'
+    type: 'ADD_LICAO',
+    payload
   })
 }

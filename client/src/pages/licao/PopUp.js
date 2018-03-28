@@ -37,8 +37,8 @@ class PopUp extends Component {
       >
         <div
           style={this.props.styles}
-          className={`window card col-md-6 col-sm-11 ${this.props.cssClasses || ''}`
-          }>
+          className={`window card col-md-6 col-sm-11 ${this.props.cssClasses || ''}`}
+        >
           {this.props.children}
           <span
             className='close'
