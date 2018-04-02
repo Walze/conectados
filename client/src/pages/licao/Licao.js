@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Cards from './Cards'
 
 import * as popUp from '../../actions/popups.action'
+import * as LicoesActions from '../../actions/licoes.action'
 import PopUp from './PopUp'
 
 import { Card } from '../../interfaces'
@@ -14,14 +15,10 @@ class Licao extends Component {
     this.state = {
       newCard: new Card(),
       editNome: false,
-      newTitulo: this.props.licao.titulo
+      newTitulo: ''
     }
 
     window.licao = this
-  }
-
-  editNome() {
-    this.setState({ editNome: !this.state.editNome }, () => this.refs.nomeInput.focus())
   }
 
   handleChange(e, index = null) {
@@ -33,15 +30,39 @@ class Licao extends Component {
       newCard[e.target.name][index] = e.target.value
 
     newCard.licao_id = this.props.licao.id
+    newCard.pos = this.props.licao.cards.length + 1
+
     this.setState({ newCard })
   }
 
-  createCard(card) {
-    addCard(card)
+  createCard() {
+    addCard(this.state.newCard)
   }
 
   newTitulo(e) {
     this.setState({ newTitulo: e.target.value })
+  }
+
+  editNome() {
+    this.setState(
+      {
+        editNome: !this.state.editNome,
+        newTitulo: this.props.licao.titulo
+      },
+      () => this.refs.nomeInput.focus()
+    )
+
+    if (this.state.editNome) {
+      const licao = Object.assign({}, this.props.licao)
+      licao.titulo = this.state.newTitulo
+
+      LicoesActions.updateTitulo(licao)
+    }
+  }
+
+  deleteLicao() {
+    LicoesActions.deleteLicao(this.props.licao.id)
+    popUp.close(this.props.popUp.state.id)
   }
 
   render() {
@@ -112,7 +133,7 @@ class Licao extends Component {
 
                   <button
                     type='submit'
-                    onClick={() => this.createCard(this.state.newCard)}
+                    onClick={() => this.createCard()}
                     className='col-sm-12 btn btn-primary'
                   >
                     Adicionar
@@ -130,7 +151,7 @@ class Licao extends Component {
 
         <div className='d-flex flex-wrap justify-content-center'>
           <div style={{ width: '320px' }} className='d-flex flex-wrap justify-content-center flex-column'>
-            <button className='btn btn-danger'>Deletar</button>
+            <button onClick={() => this.deleteLicao()} className='btn btn-danger'>Deletar</button>
           </div>
         </div>
 

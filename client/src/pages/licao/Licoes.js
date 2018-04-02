@@ -15,6 +15,7 @@ class Licoes extends Component {
       activeLicao: new LicaoInterface(),
     }
 
+    this.cardsPopup = {}
   }
 
   componentDidMount() {
@@ -60,7 +61,7 @@ class Licoes extends Component {
         </div>
 
         <PopUp ref={ref => this.cardsPopup = ref} cssClasses={'col-md-11 overflow'}>
-          <Licao licao={this.state.activeLicao} />
+          <Licao popUp={this.cardsPopup} licao={this.state.activeLicao} />
         </PopUp>
       </div >
     )

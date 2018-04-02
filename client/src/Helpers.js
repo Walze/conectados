@@ -15,7 +15,14 @@ Array.prototype.findObj = function (prop, value) {
       return this[i]
 }
 
-export const array = {
+// eslint-disable-next-line
+Array.prototype.findIndexOfObj = function (prop, value) {
+  for (var i = 0, len = this.length; i < len; i++)
+    if (String(this[i][prop]) === String(value))
+      return i
+}
+
+export const Immutable = {
   Push(arr, newEntry) {
     return [...arr, newEntry]
   },

@@ -6,3 +6,17 @@ export function add(payload) {
     payload
   })
 }
+
+export function updateTitulo(payload) {
+  dispatcher.dispatch({
+    type: 'UPDATE_TITULO',
+    payload
+  })
+}
+
+export function deleteLicao(payload) {
+  dispatcher.dispatch({
+    type: 'DELETE_LICAO',
+    payload
+  })
+}

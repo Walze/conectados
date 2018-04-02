@@ -26,7 +26,7 @@ class LicoesPage extends Component {
     this.setState({ criar: !this.state.criar })
   }
 
-  create(licao) { add(licao) }
+  create() { add(this.state.newLicao) }
 
   render() {
 
@@ -75,8 +75,19 @@ class LicoesPage extends Component {
 
               </div>
 
-              <button type='submit' onClick={() => this.create(this.state.newLicao)} className='btn btn-primary mb-2'>Adicionar</button>
-              <button className='btn btn-danger' onClick={() => this.criarBotao()}>Fechar</button>
+              <button
+                onClick={() => this.create()}
+                className='btn btn-primary mb-2'
+              >
+                Adicionar
+              </button>
+
+              <button
+                className='btn btn-danger'
+                onClick={() => this.criarBotao()}
+              >
+                Fechar
+              </button>
             </div>
           </div>
         </div>

@@ -1,6 +1,6 @@
 import dispatcher from '../dispatcher'
 import { EventEmitter } from 'events'
-import { makeid, array as Immutable } from '../Helpers'
+import { makeid, Immutable } from '../Helpers'
 import { Licao, Card } from '../interfaces'
 
 //temp
@@ -58,6 +58,10 @@ class LicoesStore extends EventEmitter {
     window.licoes = this
   }
 
+  find(id) {
+    return this._licoes.findObj('id', id)
+  }
+
   get() {
     return [...this._licoes]
   }
@@ -69,6 +73,7 @@ class LicoesStore extends EventEmitter {
 
   handleActions(action) {
     const load = action.payload
+    console.log('licoes', load)
 
     switch (action.type) {
 
@@ -78,8 +83,21 @@ class LicoesStore extends EventEmitter {
 
       case 'ADD_CARD':
         this.change(() => {
-          const licao = this._licoes.findObj('id', load.licao_id)
+          const licao = this.find(load.licao_id)
           licao.cards = Immutable.Push(licao.cards, load)
+        })
+        break
+
+      case 'UPDATE_TITULO':
+        this.change(() => {
+          const licao = this.find(load.id)
+          licao.titulo = load.titulo
+        })
+        break
+
+      case 'DELETE_LICAO':
+        this.change(() => {
+          this._licoes = Immutable.Delete(this._licoes, this._licoes.findIndexOfObj('id', load))
         })
         break
 
