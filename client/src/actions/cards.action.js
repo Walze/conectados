@@ -6,3 +6,17 @@ export function add(payload) {
     payload
   })
 }
+
+export function updateCard(payload) {
+  dispatcher.dispatch({
+    type: 'UPDATE_CARD',
+    payload
+  })
+}
+
+export function swapPos(payload) {
+  dispatcher.dispatch({
+    type: 'SWAP_POS',
+    payload
+  })
+}

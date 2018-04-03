@@ -1,50 +1,88 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { Card as CardInterface } from '../../interfaces'
+import * as CardActions from "../../actions/cards.action";
 
-class Card extends Component {
+class Card extends React.Component {
 
   constructor(props) {
     super(props)
 
     this.updateCard = new CardInterface()
+
+    this.state = {
+      swap: {
+        licao_id: 0,
+        from: 0,
+        to: 0
+      }
+    }
   }
 
-  change(e) {
+  changeUpdate(e) {
     this.updateCard[e.target.name] = e.target.value
 
     this.forceUpdate()
   }
 
+  stateChange(e) {
+    let swap = Object.assign({}, this.state.swap)
+    swap.from = this.props.card.pos
+    swap.licao_id = this.props.card.licao_id
+
+    swap[e.target.name] = Number(e.target.value)
+
+    console.log(swap)
+
+    this.setState({ swap })
+  }
+
+  save() {
+    CardActions.updateCard(this.updateCard)
+    CardActions.swapPos(this.state.swap)
+  }
+
+  remove() {
+
+  }
+
   render() {
-    if (this.updateCard.id != 0 && this.props.card.id !== this.updateCard.id)
+    const condition =
+      this.updateCard.id !== 0 &&
+      (
+        this.props.card.id !== this.updateCard.id ||
+        this.props.card.licao_id !== this.updateCard.licao_id
+      )
+
+    if (condition)
       this.updateCard = Object.assign({}, this.props.card)
 
+
     return (
-      <div >
+      <div>
         <h4 className='text-center mb-2'>
           <b>
             Card #{this.updateCard.id}
           </b>
         </h4>
 
-        <img src={this.updateCard.images[0]} className='col-sm-12' />
+        <img src={this.updateCard.images[0]} className='col-sm-12' alt='' />
 
-        <textarea onChange={e => this.change(e)} name='text' value={this.updateCard.text} rows='4' className='form-control'></textarea>
+        <textarea onChange={e => this.changeUpdate(e)} name='text' value={this.updateCard.text} rows='4' className='form-control'></textarea>
 
         <div className='mt-4'>
           <b>Tocar de Posição</b>
 
           <div className='form-group'>
-            <input type='number' className='form-control' placeholder='Digite o número do card que deseja trocar de posição com esse' />
+            <input name='to' onChange={e => this.stateChange(e)} type='number' className='form-control' placeholder='Digite o número do card que deseja trocar de posição com esse' />
 
             <div className="d-flex justify-content-between p-1">
-              <button className='btn btn-primary'>Salvar</button>
-              <button className='btn btn-danger'>Deletar</button>
+              <button onClick={() => this.save()} className='btn btn-primary'>Salvar</button>
+              <button onClick={() => this.remove()} className='btn btn-danger'>Deletar</button>
             </div>
           </div>
 
         </div>
-      </div >
+      </div>
     )
   }
 }

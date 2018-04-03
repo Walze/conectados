@@ -39,6 +39,16 @@ export const Immutable = {
     return [newEntry, ...arr]
   },
 
+  Swap(array, x, y) {
+    let arr = [...array]
+
+    let temp = arr[y]
+    arr[y] = arr[x]
+    arr[x] = temp
+
+    return arr
+  },
+
   Sort(arr, compareFunction) {
     return [...arr].sort(compareFunction)
   },

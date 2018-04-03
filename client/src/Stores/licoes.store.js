@@ -71,14 +71,38 @@ class LicoesStore extends EventEmitter {
     this.emit('changes')
   }
 
+  sort() {
+    const sortFunc = (a, b) => {
+      if (a.pos < b.pos)
+        return -1;
+      if (a.pos > b.pos)
+        return 1;
+      return 0;
+    }
+
+    this._licoes.map(lic => lic.cards.sort(sortFunc))
+  }
+
   handleActions(action) {
     const load = action.payload
-    console.log('licoes', load)
 
     switch (action.type) {
+      case 'UPDATE_TITULO':
+        this.change(() => {
+          const licao = this.find(load.id)
+          licao.titulo = load.titulo
+        })
+        break
 
       case 'ADD_LICAO':
         this.change(() => this._licoes = Immutable.Push(this._licoes, load))
+        break
+
+      case 'DELETE_LICAO':
+        // load = id
+        this.change(() => {
+          this._licoes = Immutable.Delete(this._licoes, this._licoes.findIndexOfObj('id', load))
+        })
         break
 
       case 'ADD_CARD':
@@ -88,16 +112,32 @@ class LicoesStore extends EventEmitter {
         })
         break
 
-      case 'UPDATE_TITULO':
+      case 'UPDATE_CARD':
         this.change(() => {
-          const licao = this.find(load.id)
-          licao.titulo = load.titulo
+          const licao = this.find(load.licao_id);
+          let cardIndex = licao.cards.findIndexOfObj('id', load.id);
+
+          licao.cards[cardIndex] = load;
         })
         break
 
-      case 'DELETE_LICAO':
+      case 'SWAP_POS':
+        // load = {from, to}
         this.change(() => {
-          this._licoes = Immutable.Delete(this._licoes, this._licoes.findIndexOfObj('id', load))
+          if (load.from !== 0 && load.to !== 0) {
+            const licao = this.find(load.licao_id);
+            console.log(licao.cards)
+
+            let cardFrom = licao.cards.findObj('pos', load.from)
+            let cardTo = licao.cards.findObj('pos', load.to)
+
+
+            let temp = cardFrom.pos
+            cardFrom.pos = cardTo.pos
+            cardTo.pos = temp
+
+            this.sort()
+          }
         })
         break
 
