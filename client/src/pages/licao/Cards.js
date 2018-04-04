@@ -16,7 +16,11 @@ class Cards extends Component {
 
   openCard(el) {
     this.setState({ currentCard: el })
-    popUp.open(this.cardPopup.state.id)
+    popUp.open(this.refs.cardPopup.state.id)
+  }
+
+  closePop(popup) {
+    popUp.close(this.refs[popup].state.id)
   }
 
   render() {
@@ -31,7 +35,7 @@ class Cards extends Component {
             onClick={() => this.openCard(card)}
           >
             <div className="card-header text-center font-weight-bold">
-              Card #{card.pos}
+              #{card.pos}
             </div>
             <div className="card-body d-flex align-items-center">
               <p className="card-text">{card.text}</p>
@@ -40,8 +44,8 @@ class Cards extends Component {
           </div>
         )}
 
-        <PopUp ref={ref => this.cardPopup = ref}>
-          <Card card={this.state.currentCard} />
+        <PopUp ref='cardPopup'>
+          <Card closePopUp={() => this.closePop('cardPopup')} card={this.state.currentCard} />
         </PopUp>
       </div >
     )

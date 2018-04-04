@@ -14,6 +14,13 @@ export function updateCard(payload) {
   })
 }
 
+export function deleteCard(payload) {
+  dispatcher.dispatch({
+    type: 'DELETE_CARD',
+    payload
+  })
+}
+
 export function swapPos(payload) {
   dispatcher.dispatch({
     type: 'SWAP_POS',

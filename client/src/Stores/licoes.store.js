@@ -85,13 +85,15 @@ class LicoesStore extends EventEmitter {
 
   handleActions(action) {
     const load = action.payload
+    const licao = this.find(load.licao_id) || this.find(load.id)
+    let cardIndex;
+
+    if (licao)
+      cardIndex = licao.cards.findIndexOfObj('id', load.id);
 
     switch (action.type) {
       case 'UPDATE_TITULO':
-        this.change(() => {
-          const licao = this.find(load.id)
-          licao.titulo = load.titulo
-        })
+        this.change(() => licao.titulo = load.titulo)
         break
 
       case 'ADD_LICAO':
@@ -100,37 +102,34 @@ class LicoesStore extends EventEmitter {
 
       case 'DELETE_LICAO':
         // load = id
-        this.change(() => {
+        this.change(() =>
           this._licoes = Immutable.Delete(this._licoes, this._licoes.findIndexOfObj('id', load))
-        })
+        )
         break
 
       case 'ADD_CARD':
-        this.change(() => {
-          const licao = this.find(load.licao_id)
+        this.change(() =>
           licao.cards = Immutable.Push(licao.cards, load)
-        })
+        )
         break
 
       case 'UPDATE_CARD':
-        this.change(() => {
-          const licao = this.find(load.licao_id);
-          let cardIndex = licao.cards.findIndexOfObj('id', load.id);
+        this.change(() => licao.cards[cardIndex] = load)
+        break
 
-          licao.cards[cardIndex] = load;
-        })
+      case 'DELETE_CARD':
+        this.change(() =>
+          licao.cards = Immutable.Delete(licao.cards, licao.cards.findIndexOfObj('id', load.id))
+        )
         break
 
       case 'SWAP_POS':
         // load = {from, to}
         this.change(() => {
           if (load.from !== 0 && load.to !== 0) {
-            const licao = this.find(load.licao_id);
-            console.log(licao.cards)
 
-            let cardFrom = licao.cards.findObj('pos', load.from)
-            let cardTo = licao.cards.findObj('pos', load.to)
-
+            const cardFrom = licao.cards.findObj('pos', load.from)
+            const cardTo = licao.cards.findObj('pos', load.to)
 
             let temp = cardFrom.pos
             cardFrom.pos = cardTo.pos

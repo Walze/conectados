@@ -24,14 +24,12 @@ class Card extends React.Component {
     this.forceUpdate()
   }
 
-  stateChange(e) {
+  swapChange(e) {
     let swap = Object.assign({}, this.state.swap)
     swap.from = this.props.card.pos
     swap.licao_id = this.props.card.licao_id
 
     swap[e.target.name] = Number(e.target.value)
-
-    console.log(swap)
 
     this.setState({ swap })
   }
@@ -39,10 +37,12 @@ class Card extends React.Component {
   save() {
     CardActions.updateCard(this.updateCard)
     CardActions.swapPos(this.state.swap)
+    this.props.closePopUp()
   }
 
   remove() {
-
+    CardActions.deleteCard(this.updateCard)
+    this.props.closePopUp()
   }
 
   render() {
@@ -55,7 +55,6 @@ class Card extends React.Component {
 
     if (condition)
       this.updateCard = Object.assign({}, this.props.card)
-
 
     return (
       <div>
@@ -73,7 +72,7 @@ class Card extends React.Component {
           <b>Tocar de Posição</b>
 
           <div className='form-group'>
-            <input name='to' onChange={e => this.stateChange(e)} type='number' className='form-control' placeholder='Digite o número do card que deseja trocar de posição com esse' />
+            <input name='to' onChange={e => this.swapChange(e)} type='number' className='form-control' placeholder='Digite o número do card que deseja trocar de posição com esse' />
 
             <div className="d-flex justify-content-between p-1">
               <button onClick={() => this.save()} className='btn btn-primary'>Salvar</button>
