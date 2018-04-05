@@ -5,7 +5,7 @@ import * as popUp from '../../actions/popups.action'
 import * as LicoesActions from '../../actions/licoes.action'
 import PopUp from './PopUp'
 
-import { Card } from '../../interfaces'
+import { Card, Licao as LicaoInterface } from '../../interfaces'
 import { add as addCard } from '../../actions/cards.action'
 
 class Licao extends Component {
@@ -14,8 +14,9 @@ class Licao extends Component {
     super(props)
     this.state = {
       newCard: new Card(),
-      editNome: false,
-      edit: { titulo: '', desc: '' }
+      editNomeBool: false,
+      edit: new LicaoInterface(),
+      editDefault: new LicaoInterface()
     }
 
     window.licao = this
@@ -47,23 +48,24 @@ class Licao extends Component {
     this.setState({ edit })
   }
 
-  editNome(e, bool = null) {
-    const inputs = e.target.nodeName == 'INPUT' || e.target.nodeName == 'TEXTAREA'
+  editNomeHandler(e, bool = null) {
+    const inputsClick = e.target === this.refs.tituloInput || e.target === this.refs.descInput
 
-    if (inputs) bool = true
-    if (bool === null) bool = !this.state.editNome
+    if (inputsClick) bool = true
+    if (bool === null) bool = !this.state.editNomeBool
 
     const edit =
-      this.state.edit.titulo ?
+      this.props.licao.id === this.state.edit.id
+        ?
         this.state.edit :
-        { titulo: this.props.licao.titulo, desc: this.props.licao.desc }
+        { ...this.props.licao }
 
     this.setState({
-      editNome: bool,
+      editNomeBool: bool,
       edit,
     })
 
-    if (this.state.editNome && !inputs) {
+    if (this.state.editNomeBool && !inputsClick) {
       const licao = Object.assign({}, this.props.licao)
       licao.titulo = this.state.edit.titulo
       licao.desc = this.state.edit.desc
@@ -72,32 +74,45 @@ class Licao extends Component {
     }
   }
 
+  componentDidMount() {
+    const clickHandler = e => {
+      if (this.wrapperRef && !this.wrapperRef.contains(e.target)) {
+        this.editNomeHandler(e, false)
+        this.setState({ edit: this.props.licao })
+      }
+    }
+
+    document.addEventListener('click', clickHandler)
+    document.addEventListener('click', clickHandler)
+  }
+
   deleteLicao() {
     LicoesActions.deleteLicao(this.props.licao.id)
     popUp.close(this.props.popUp.state.id)
   }
 
   render() {
+
     return (
-      <div>
+      <div ref={ref => this.wrapperRef = ref}>
         <br />
 
         <div className='d-flex flex-wrap justify-content-center flex-column align-items-center'>
 
           <div
             className='d-flex flex-wrap justify-content-center flex-column align-items-center'
-            style={{ width: '100%' }} onClick={e => this.editNome(e)}
+            style={{ width: '100%' }} onClick={e => this.editNomeHandler(e)}
           >
             <div style={{ width: '320px' }} className='mx-4 my-3 d-flex flex-wrap justify-content-center flex-column'>
 
-              <small hidden={this.state.editNome}
+              <small hidden={this.state.editNomeBool}
                 className='text-secondary text-center'>
                 <i> Clique no nome para editar, depois clique fora do campo para salvar. </i>
               </small>
 
               <h1
-                onClick={e => this.editNome(e, true)}
-                hidden={this.state.editNome}
+                onClick={e => this.editNomeHandler(e, true)}
+                hidden={this.state.editNomeBool}
                 className='display-4 text-center'
               >
                 {this.props.licao.titulo}
@@ -105,18 +120,19 @@ class Licao extends Component {
 
               <div name='edit-fields'>
                 <input
-                  ref='nomeInput'
+                  ref='tituloInput'
                   onChange={e => this.edit(e)}
                   name='titulo'
-                  hidden={!this.state.editNome}
+                  hidden={!this.state.editNomeBool}
                   className='form-control form-control-lg display-4 text-center'
                   value={this.state.edit.titulo}
                 />
 
                 <textarea
+                  ref='descInput'
                   onChange={e => this.edit(e)}
                   name='desc'
-                  hidden={!this.state.editNome}
+                  hidden={!this.state.editNomeBool}
                   className='form-control display-4 text-center'
                   value={this.state.edit.desc}
                   rows='4'
@@ -126,11 +142,11 @@ class Licao extends Component {
 
 
 
-              <small hidden={this.state.editNome} className='text-secondary text-center'>
+              <small hidden={this.state.editNomeBool} className='text-secondary text-center'>
                 <i> {this.props.licao.desc} </i>
               </small>
 
-              <button hidden={this.state.editNome} className='btn btn-success btn-sm' onClick={() => popUp.open(this.refs.newCardPopup.state.id)}>
+              <button hidden={this.state.editNomeBool} className='btn btn-success btn-sm' onClick={() => popUp.open(this.refs.newCardPopup.state.id)}>
                 Criar Card
             </button>
 
