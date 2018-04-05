@@ -42,34 +42,32 @@ class Licao extends Component {
   }
 
   edit(e) {
-    //error
-    const edit = this.state.edit
+    const edit = Object.assign({}, this.state.edit)
     edit[e.target.name] = e.target.value
-    console.log(e.target.name, e.target.value)
     this.setState({ edit })
   }
 
   editNome(e, bool = null) {
+    const inputs = e.target.nodeName == 'INPUT' || e.target.nodeName == 'TEXTAREA'
+
+    if (inputs) bool = true
     if (bool === null) bool = !this.state.editNome
 
-    if (e.target.nodeName == 'INPUT' || e.target.nodeName == 'TEXTAREA') {
-      bool = true
-    }
+    const edit =
+      this.state.edit.titulo ?
+        this.state.edit :
+        { titulo: this.props.licao.titulo, desc: this.props.licao.desc }
 
     this.setState({
       editNome: bool,
-      edit: {
-        titulo: this.props.licao.titulo,
-        desc: this.props.licao.desc
-      }
+      edit,
     })
 
-    if (this.state.editNome) {
+    if (this.state.editNome && !inputs) {
       const licao = Object.assign({}, this.props.licao)
       licao.titulo = this.state.edit.titulo
       licao.desc = this.state.edit.desc
 
-      console.log(licao)
       LicoesActions.updateTitulo(licao)
     }
   }
@@ -84,7 +82,7 @@ class Licao extends Component {
       <div>
         <br />
 
-        <div className='d-flex flex-wrap justify-content-center flex-column align-items-center' >
+        <div className='d-flex flex-wrap justify-content-center flex-column align-items-center'>
 
           <div
             className='d-flex flex-wrap justify-content-center flex-column align-items-center'
@@ -109,7 +107,7 @@ class Licao extends Component {
                 <input
                   ref='nomeInput'
                   onChange={e => this.edit(e)}
-                  nome='titulo'
+                  name='titulo'
                   hidden={!this.state.editNome}
                   className='form-control form-control-lg display-4 text-center'
                   value={this.state.edit.titulo}
@@ -117,7 +115,7 @@ class Licao extends Component {
 
                 <textarea
                   onChange={e => this.edit(e)}
-                  nome='desc'
+                  name='desc'
                   hidden={!this.state.editNome}
                   className='form-control display-4 text-center'
                   value={this.state.edit.desc}

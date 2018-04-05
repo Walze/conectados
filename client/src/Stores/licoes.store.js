@@ -93,7 +93,10 @@ class LicoesStore extends EventEmitter {
 
     switch (action.type) {
       case 'UPDATE_TITULO':
-        this.change(() => licao.titulo = load.titulo)
+        this.change(() => {
+          licao.titulo = load.titulo
+          licao.desc = load.desc
+        })
         break
 
       case 'ADD_LICAO':
