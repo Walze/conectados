@@ -48,22 +48,18 @@ class Licao extends Component {
     this.setState({ edit })
   }
 
-  editNomeHandler(e, bool = null) {
+  editNomeHandler(e, editNomeBool = null) {
     const inputsClick = e.target === this.refs.tituloInput || e.target === this.refs.descInput
 
-    if (inputsClick) bool = true
-    if (bool === null) bool = !this.state.editNomeBool
+    if (inputsClick) editNomeBool = true
+    if (editNomeBool === null) editNomeBool = !this.state.editNomeBool
 
     const edit =
-      this.props.licao.id === this.state.edit.id
-        ?
+      this.props.licao.id === this.state.edit.id ?
         this.state.edit :
         { ...this.props.licao }
 
-    this.setState({
-      editNomeBool: bool,
-      edit,
-    })
+    this.setState({ editNomeBool, edit })
 
     if (this.state.editNomeBool && !inputsClick) {
       const licao = Object.assign({}, this.props.licao)
@@ -82,7 +78,6 @@ class Licao extends Component {
       }
     }
 
-    document.addEventListener('click', clickHandler)
     document.addEventListener('click', clickHandler)
   }
 
