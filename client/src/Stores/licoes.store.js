@@ -25,7 +25,7 @@ class LicoesStore extends EventEmitter {
       new Licao({
         id: 1,
         titulo: 'Lição #23',
-        categoria_id: 'Categoria1',
+        categoria_id: 1,
         cards: genCards(1),
         desc: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempore, nihil.',
       }),
@@ -33,7 +33,7 @@ class LicoesStore extends EventEmitter {
       new Licao({
         id: 2,
         titulo: 'Lição #24',
-        categoria_id: 'Categoria2',
+        categoria_id: 2,
         cards: genCards(2),
         desc: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempore, Lorem ipsum dolor sit amet consectetur adipisicing elit. nihil.',
       }),
@@ -41,7 +41,7 @@ class LicoesStore extends EventEmitter {
       new Licao({
         id: 3,
         titulo: 'Lição #25',
-        categoria_id: 'Categoria3',
+        categoria_id: 3,
         cards: genCards(3),
         desc: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempore, nihil.',
       }),
@@ -49,7 +49,7 @@ class LicoesStore extends EventEmitter {
       new Licao({
         id: 4,
         titulo: 'Lição #26',
-        categoria_id: 'Categoria4',
+        categoria_id: 4,
         cards: genCards(4),
         desc: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempore, nihil.',
       }),
@@ -84,55 +84,62 @@ class LicoesStore extends EventEmitter {
   }
 
   handleActions(action) {
-    const load = action.payload
-    const licao = this.find(load.licao_id) || this.find(load.id)
+    const payload = action.payload
+    const licao = this.find(payload.licao_id) || this.find(payload.id)
     let cardIndex;
 
     if (licao)
-      cardIndex = licao.cards.findIndexOfObj('id', load.id);
+      cardIndex = licao.cards.findIndexOfObj('id', payload.id);
 
     switch (action.type) {
       case 'UPDATE_TITULO':
         this.change(() => {
-          licao.titulo = load.titulo
-          licao.desc = load.desc
+          licao.titulo = payload.titulo
+          licao.desc = payload.desc
         })
         break
 
       case 'ADD_LICAO':
-        this.change(() => this._licoes = Immutable.Push(this._licoes, load))
+        this.change(() => this._licoes = Immutable.Push(this._licoes, payload))
+        break
+
+      case 'UPDATE_CAT':
+        // payload = {id, cat_id}
+        this.change(() => {
+          licao.categoria_id = payload.cat_id
+        })
         break
 
       case 'DELETE_LICAO':
-        // load = id
+        // payload = id
         this.change(() =>
-          this._licoes = Immutable.Delete(this._licoes, this._licoes.findIndexOfObj('id', load))
+          this._licoes = Immutable.Delete(this._licoes, this._licoes.findIndexOfObj('id', payload))
         )
         break
 
       case 'ADD_CARD':
         this.change(() =>
-          licao.cards = Immutable.Push(licao.cards, load)
+          licao.cards = Immutable.Push(licao.cards, payload)
         )
         break
 
       case 'UPDATE_CARD':
-        this.change(() => licao.cards[cardIndex] = load)
+        this.change(() => licao.cards[cardIndex] = payload)
         break
 
       case 'DELETE_CARD':
         this.change(() =>
-          licao.cards = Immutable.Delete(licao.cards, licao.cards.findIndexOfObj('id', load.id))
+          licao.cards = Immutable.Delete(licao.cards, licao.cards.findIndexOfObj('id', payload.id))
         )
         break
 
       case 'SWAP_POS':
-        // load = {from, to}
+        // payload = {from, to}
         this.change(() => {
-          if (load.from !== 0 && load.to !== 0) {
+          if (payload.from !== 0 && payload.to !== 0) {
 
-            const cardFrom = licao.cards.findObj('pos', load.from)
-            const cardTo = licao.cards.findObj('pos', load.to)
+            const cardFrom = licao.cards.findObj('pos', payload.from)
+            const cardTo = licao.cards.findObj('pos', payload.to)
 
             let temp = cardFrom.pos
             cardFrom.pos = cardTo.pos

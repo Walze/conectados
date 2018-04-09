@@ -81,6 +81,13 @@ class Licao extends Component {
 		document.addEventListener('click', clickHandler)
 	}
 
+	handleCatChange(e) {
+		LicoesActions.updateCat({
+			id: this.props.licao.id,
+			cat_id: e.target.value
+		})
+	}
+
 	deleteLicao() {
 		LicoesActions.deleteLicao(this.props.licao.id)
 		popUp.close(this.props.popUp.state.id)
@@ -202,7 +209,7 @@ class Licao extends Component {
 							style={{ width: '320px' }}
 							className='mx-4 my-3 d-flex flex-wrap justify-content-center flex-column'
 						>
-							<p className='text-center'>
+							<p hidden={this.state.editNomeBool} className='text-center'>
 								<b>
 									Descrição
 								</b>
@@ -228,12 +235,16 @@ class Licao extends Component {
 						style={{ width: '320px' }}
 						className='flex-wrap m-4 justify-content-center flex-column'
 					>
-						<select className='custom-select'>
-							<option value={null} disabled>Trocar de Categoria</option>
-							<option>cat1</option>
-							<option>cat2</option>
-							<option>cat3</option>
-							<option>cat4</option>
+						<select
+							value={this.props.licao.categoria_id}
+							onChange={e => this.handleCatChange(e)}
+							className='custom-select'
+						>
+							<option value={false} disabled>Trocar de Categoria</option>
+							<option value={1}>Categoria #1</option>
+							<option value={2}>Categoria #2</option>
+							<option value={3}>Categoria #3</option>
+							<option value={4}>Categoria #4</option>
 						</select>
 					</div>
 				</div>

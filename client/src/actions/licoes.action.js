@@ -14,6 +14,13 @@ export function updateTitulo(payload) {
   })
 }
 
+export function updateCat(payload) {
+  dispatcher.dispatch({
+    type: 'UPDATE_CAT',
+    payload
+  })
+}
+
 export function deleteLicao(payload) {
   dispatcher.dispatch({
     type: 'DELETE_LICAO',
