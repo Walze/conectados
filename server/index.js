@@ -20,8 +20,17 @@ app.use((req, res, next) => {
 const PORT = 3001
 app.listen(PORT, () => console.log(`Listening on port ${PORT}`))
 
+const TABLES = ['licao', 'categoria', 'card', 'imagens']
 
+
+// Route Overrides
 app.get('/licao', LicaoController.all)
 app.get('/licao/:id', LicaoController.find)
-crud('licao', app)
 
+
+
+
+
+
+
+TABLES.map(table => crud(table, app))
