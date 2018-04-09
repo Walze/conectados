@@ -75,7 +75,7 @@ class Database {
   }
 
   id(table, id) {
-    const query = `SELECT * FROM ${connection.escape(table)} WHERE id = ${id}`
+    const query = `SELECT * FROM ${table} WHERE id = ${id}`
 
     return this.run(query)
   }

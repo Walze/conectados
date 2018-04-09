@@ -1,8 +1,12 @@
-const bodyParser = require('body-parser')
 const express = require('express')
 const app = express()
+const bodyParser = require('body-parser')
+
+const log = require('better-log')
+log.setConfig({ depth: 2 })
+
+const LicaoController = require('./licao.controller')
 const crud = require('./CrudListener')
-const db = require('./DB')
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -15,9 +19,9 @@ app.use((req, res, next) => {
 
 const PORT = 3001
 app.listen(PORT, () => console.log(`Listening on port ${PORT}`))
-app.get('/', (req, res) => res.send("Got /"))
 
 
-const tables = ['categoria']
+app.get('/licao', LicaoController.all)
+app.get('/licao/:id', LicaoController.find)
+crud('licao', app)
 
-tables.map(table => crud(table, app))
