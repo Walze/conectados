@@ -1,4 +1,4 @@
-const db = require('./DB')
+const db = require('../DB')
 
 
 function CrudListener(table, expressApp) {

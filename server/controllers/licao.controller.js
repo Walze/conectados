@@ -1,4 +1,4 @@
-const db = require('./DB')
+const db = require('../DB')
 
 module.exports = {
   all: (req, res) => {
