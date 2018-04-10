@@ -5,10 +5,16 @@ module.exports = {
     const queryLicao = `SELECT * FROM licao`;
     const queryCards = `SELECT * FROM card`;
     db.run(queryLicao)
-      .then(licoes => db.run(queryCards).then(cards => {
-        licoes.map(licao => licao.cards = cards.filter(card => card.licao_id === licao.id));
-        res.send(licoes);
-      }).catch(err => res.status(500).send(err))).catch(err => res.status(500).send(err));
+      .then(licoes =>
+        db.run(queryCards).then(cards => {
+
+          licoes.map(licao =>
+            licao.cards = cards.filter(card => card.licao_id === licao.id)
+          )
+          res.send(licoes)
+
+        }).catch(err => res.status(500).send(err))
+      ).catch(err => res.status(500).send(err));
   },
 
   find: (req, res) => {

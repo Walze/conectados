@@ -1,28 +1,22 @@
-function conditioner(ref, obj, fn = null) {
-  if (obj)
-    for (let prop in obj)
-      ref[prop] = obj[prop]
-  else fn()
-}
+
+
+
+
 
 export class Licao {
-  constructor(obj) {
-    conditioner(this, obj, () => {
-      this.titulo = ''
-      this.desc = ''
-      this.categoria_id = 0
-      this.cards = []
-    })
+  constructor(obj = {}) {
+    this.titulo = obj.titulo || ''
+    this.desc = obj.desc || ''
+    this.categoria_id = obj.categoria_id || 0
+    this.cards = obj.cards || []
   }
 }
 
 export class Card {
-  constructor(obj) {
-    conditioner(this, obj, () => {
-      this.text = ''
-      this.images = ['']
-      this.pos = 0
-      this.licao_id = 0
-    })
+  constructor(obj = {}) {
+    this.text = obj.text || ''
+    this.images = obj.images || ['']
+    this.pos = obj.pos || 0
+    this.licao_id = obj.licao_id || 0
   }
 }

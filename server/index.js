@@ -30,7 +30,4 @@ app.get('/licao/:id', LicaoController.find)
 
 
 
-
-
-
 TABLES.map(table => crud(table, app))

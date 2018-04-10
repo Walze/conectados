@@ -1,19 +1,7 @@
 import dispatcher from '../dispatcher'
 import { EventEmitter } from 'events'
-import { makeid, Immutable } from '../Helpers'
-import { Licao, Card } from '../interfaces'
-
-//temp
-const genCards = id =>
-  [
-    new Card({ id: 1, licao_id: id, text: makeid(Math.floor(Math.random() * (200 - 100 + 1)) + 100), images: [], pos: 1 }),
-    new Card({ id: 2, licao_id: id, text: makeid(Math.floor(Math.random() * (200 - 100 + 1)) + 100), images: [], pos: 2 }),
-    new Card({ id: 3, licao_id: id, text: makeid(Math.floor(Math.random() * (200 - 100 + 1)) + 100), images: [], pos: 3 }),
-    new Card({ id: 4, licao_id: id, text: makeid(Math.floor(Math.random() * (200 - 100 + 1)) + 100), images: [], pos: 4 }),
-    new Card({ id: 5, licao_id: id, text: makeid(Math.floor(Math.random() * (200 - 100 + 1)) + 100), images: [], pos: 5 }),
-    new Card({ id: 6, licao_id: id, text: makeid(Math.floor(Math.random() * (200 - 100 + 1)) + 100), images: [], pos: 6 }),
-  ]
-
+import { Immutable } from '../Helpers'
+import LicaoService from '../services/licao.service'
 
 class LicoesStore extends EventEmitter {
 
@@ -21,41 +9,17 @@ class LicoesStore extends EventEmitter {
     super()
 
 
-    this._licoes = [
-      new Licao({
-        id: 1,
-        titulo: 'Lição #23',
-        categoria_id: 1,
-        cards: genCards(1),
-        desc: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempore, nihil.',
-      }),
+    this._licoes = []
 
-      new Licao({
-        id: 2,
-        titulo: 'Lição #24',
-        categoria_id: 2,
-        cards: genCards(2),
-        desc: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempore, Lorem ipsum dolor sit amet consectetur adipisicing elit. nihil.',
-      }),
-
-      new Licao({
-        id: 3,
-        titulo: 'Lição #25',
-        categoria_id: 3,
-        cards: genCards(3),
-        desc: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempore, nihil.',
-      }),
-
-      new Licao({
-        id: 4,
-        titulo: 'Lição #26',
-        categoria_id: 4,
-        cards: genCards(4),
-        desc: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempore, nihil.',
-      }),
-    ]
+    this.fetchAPI()
 
     window.licoes = this
+  }
+
+  fetchAPI() {
+    LicaoService.all()
+      .then(licoes => this.change(() => this._licoes = licoes))
+      .catch(console.error)
   }
 
   find(id) {
