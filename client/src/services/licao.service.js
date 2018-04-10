@@ -23,10 +23,18 @@ class LicaoService {
 
   static inserir(licao) {
     delete licao.id
-    delete licao.cards 
-    
+    delete licao.cards
+
     return new Promise((res, rej) =>
       axios.post(API + '/licao', licao)
+        .then(res)
+        .catch(rej)
+    )
+  }
+
+  static delete(id) {
+    return new Promise((res, rej) =>
+      axios.delete(API + '/licao/' + id)
         .then(res)
         .catch(rej)
     )

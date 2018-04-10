@@ -60,7 +60,9 @@ class LicoesStore extends EventEmitter {
           // payload = Licao          
           licao.titulo = payload.titulo
           licao.desc = payload.desc
-          LicaoService.updateTitulo(payload).then(console.info).catch(console.error)
+          LicaoService.updateTitulo(payload)
+            .then(console.info)
+            .catch(console.error)
         })
         break
 
@@ -68,7 +70,9 @@ class LicoesStore extends EventEmitter {
         // payload = Licao
         this.change(() => {
           this._licoes = Immutable.Push(this._licoes, payload)
-          LicaoService.inserir(payload).then(console.info).catch(console.error)
+          LicaoService.inserir(payload)
+            .then(console.info)
+            .catch(console.error)
         })
         break
 
@@ -76,15 +80,20 @@ class LicoesStore extends EventEmitter {
         // payload = {id, categoria_id}
         this.change(() => {
           licao.categoria_id = payload.categoria_id
-          LicaoService.updateTitulo(payload).then(console.info).catch(console.error)
+          LicaoService.updateTitulo(payload)
+            .then(console.info)
+            .catch(console.error)
         })
         break
 
       case 'DELETE_LICAO':
         // payload = id
-        this.change(() =>
+        this.change(() => {
           this._licoes = Immutable.Delete(this._licoes, this._licoes.findIndexOfObj('id', payload))
-        )
+          LicaoService.delete(payload)
+            .then(console.info)
+            .catch(console.error)
+        })
         break
 
       case 'ADD_CARD':

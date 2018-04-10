@@ -101,7 +101,7 @@ class Database {
   }
 
   delete(table, where) {
-    let query = this.mysql.format(`DELETE * FROM ${table} WHERE ?`)
+    let query = this.mysql.format(`DELETE FROM ${table} WHERE ?`)
     query = this._whereFix(query, where)
 
     return this.run(query)
