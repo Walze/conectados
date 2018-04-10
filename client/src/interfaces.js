@@ -5,6 +5,7 @@
 
 export class Licao {
   constructor(obj = {}) {
+    this.id = obj.id || 0
     this.titulo = obj.titulo || ''
     this.desc = obj.desc || ''
     this.categoria_id = obj.categoria_id || 0
@@ -14,6 +15,7 @@ export class Licao {
 
 export class Card {
   constructor(obj = {}) {
+    this.id = obj.id || 0
     this.text = obj.text || ''
     this.images = obj.images || ['']
     this.pos = obj.pos || 0

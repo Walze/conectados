@@ -84,7 +84,7 @@ class Licao extends Component {
 	handleCatChange(e) {
 		LicoesActions.updateCat({
 			id: this.props.licao.id,
-			cat_id: e.target.value
+			categoria_id: e.target.value
 		})
 	}
 

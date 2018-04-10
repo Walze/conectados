@@ -16,7 +16,7 @@ export function updateTitulo(payload) {
 
 export function updateCat(payload) {
   dispatcher.dispatch({
-    type: 'UPDATE_CAT',
+    type: 'LICAO_UPDATE_CAT',
     payload
   })
 }

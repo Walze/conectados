@@ -8,7 +8,6 @@ class LicoesStore extends EventEmitter {
   constructor() {
     super()
 
-
     this._licoes = []
 
     this.fetchAPI()
@@ -35,42 +34,49 @@ class LicoesStore extends EventEmitter {
     this.emit('changes')
   }
 
-  sort() {
+  sortCards() {
     const sortFunc = (a, b) => {
       if (a.pos < b.pos)
-        return -1;
+        return -1
       if (a.pos > b.pos)
-        return 1;
-      return 0;
+        return 1
+      return 0
     }
 
-    this._licoes.map(lic => lic.cards.sort(sortFunc))
+    this._licoes.map(licao => licao.cards.sortCards(sortFunc))
   }
 
   handleActions(action) {
     const payload = action.payload
     const licao = this.find(payload.licao_id) || this.find(payload.id)
-    let cardIndex;
+    let cardIndex
 
     if (licao)
-      cardIndex = licao.cards.findIndexOfObj('id', payload.id);
+      cardIndex = licao.cards.findIndexOfObj('id', payload.id)
 
     switch (action.type) {
       case 'UPDATE_TITULO':
         this.change(() => {
+          // payload = Licao          
           licao.titulo = payload.titulo
           licao.desc = payload.desc
+          LicaoService.updateTitulo(payload).then(console.info).catch(console.error)
         })
         break
 
       case 'ADD_LICAO':
-        this.change(() => this._licoes = Immutable.Push(this._licoes, payload))
+        // payload = Licao
+        this.change(() => {
+          this._licoes = Immutable.Push(this._licoes, payload)
+          LicaoService.inserir(payload).then(console.info).catch(console.error)
+        })
         break
 
-      case 'UPDATE_CAT':
-        // payload = {id, cat_id}
+      case 'LICAO_UPDATE_CAT':
+        // payload = {id, categoria_id}
         this.change(() => {
-          licao.categoria_id = payload.cat_id
+          licao.categoria_id = payload.categoria_id
+          LicaoService.updateTitulo(payload).then(console.info).catch(console.error)
         })
         break
 
@@ -109,7 +115,7 @@ class LicoesStore extends EventEmitter {
             cardFrom.pos = cardTo.pos
             cardTo.pos = temp
 
-            this.sort()
+            this.sortCards()
           }
         })
         break

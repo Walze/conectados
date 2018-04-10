@@ -46,11 +46,11 @@ class LicoesPage extends Component {
               <div className='form-group'>
 
                 <input
-                  type='text'
+                  type='number'
                   className='form-control mb-3'
-                  name='categoria'
+                  name='categoria_id'
                   placeholder='Categoria'
-                  value={this.state.newLicao.categoria}
+                  value={this.state.newLicao.categoria_id}
                   onChange={e => this.handleChange(e)}
                 />
 
