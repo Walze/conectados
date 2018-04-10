@@ -5,7 +5,7 @@
   "scripts": {
     "start": "npm run client && npm run server",
     "client": "start cmd.exe @cmd /k \"cd client && npm start\"",
-    "server": "start cmd.exe @cmd /k \"cd server && node index.js\""
+    "server": "start cmd.exe @cmd /k \"cd server && nodemon\""
   },
   "repository": {
     "type": "git",

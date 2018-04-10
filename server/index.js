@@ -5,8 +5,8 @@ const bodyParser = require('body-parser')
 const log = require('better-log')
 log.setConfig({ depth: 2 })
 
-const LicaoController = require('./licao.controller')
-const crud = require('./CrudListener')
+const LicaoController = require('./controllers/licao.controller')
+const crud = require('./controllers/autoCrud')
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
