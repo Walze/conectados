@@ -46,39 +46,12 @@ class Licao extends Component {
 		this.setState({ edit })
 	}
 
-	editNomeHandler(e, editNomeBool = null) {
-		const inputsClick =
-			e.target === this.refs.tituloInput ||
-			e.target === this.refs.descInput
-
-		if (inputsClick) editNomeBool = true
-		if (editNomeBool === null) editNomeBool = !this.state.editNomeBool
-
-		const edit =
-			this.props.licao.id === this.state.edit.id ?
-				this.state.edit :
-				{ ...this.props.licao }
-
-		if (this.state.editNomeBool && !inputsClick) {
-			const licao = Object.assign({}, this.props.licao)
-			licao.titulo = this.state.edit.titulo
-			licao.desc = this.state.edit.desc
-
-			LicoesActions.updateTitulo(licao)
-		}
-
-		this.setState({ editNomeBool, edit })
+	editNomeHandler(e, editNomeBool = false) {
+		this.setState({ editNomeBool, edit: this.props.licao })
 	}
 
 	componentDidMount() {
-		const clickHandler = e => {
-			if (this.wrapperRef && !this.wrapperRef.contains(e.target)) {
-				this.editNomeHandler(e, false)
-				this.setState({ edit: this.props.licao })
-			}
-		}
 
-		document.addEventListener('click', clickHandler)
 	}
 
 	handleCatChange(e) {
@@ -95,14 +68,13 @@ class Licao extends Component {
 
 	render() {
 		return (
-			<div ref={ref => this.wrapperRef = ref}>
+			<div>
 				<br />
 				<div className='d-flex flex-wrap justify-content-center flex-column align-items-center'>
 
 					<div
 						className='pointer d-flex flex-wrap justify-content-center align-items-center'
 						style={{ width: '100%' }}
-						onClick={e => this.editNomeHandler(e)}
 					>
 						<div
 							style={{ width: '320px' }}
@@ -134,7 +106,7 @@ class Licao extends Component {
 									onChange={e => this.edit(e)}
 									name='titulo'
 									hidden={!this.state.editNomeBool}
-									className='form-control form-control-lg display-4 text-center'
+									className='form-control form-control-lg display-4 text-center mb-1'
 									value={this.state.edit.titulo}
 								/>
 
@@ -217,6 +189,14 @@ class Licao extends Component {
 							<small hidden={this.state.editNomeBool} className='text-secondary text-center'>
 								<i> {this.props.licao.desc} </i>
 							</small>
+							<div hidden={!this.state.editNomeBool}>
+								<div className='d-flex align-items-center justify-content-center flex-column' >
+									
+									<button style={{ width: '100%' }} className='btn btn-success mb-4'>Salvar</button>
+									<button style={{ width: '100%' }} className='btn btn-danger'>Cancelar</button>
+
+								</div>
+							</div>
 						</div>
 
 
