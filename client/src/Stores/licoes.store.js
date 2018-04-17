@@ -16,9 +16,9 @@ class LicoesStore extends EventEmitter {
   }
 
   fetchAPI() {
-    LicaoService.all()
+    LicaoService
+      .all()
       .then(licoes => this.change(() => this._licoes = licoes))
-      .catch(console.error)
   }
 
   find(id) {
@@ -54,15 +54,16 @@ class LicoesStore extends EventEmitter {
     if (licao)
       cardIndex = licao.cards.findIndexOfObj('id', payload.id)
 
+
+    const { remove, update_titulo, inserir } = LicaoService
+
     switch (action.type) {
       case 'UPDATE_TITULO':
         this.change(() => {
           // payload = Licao          
           licao.titulo = payload.titulo
           licao.desc = payload.desc
-          LicaoService.updateTitulo(payload)
-            .then(console.info)
-            .catch(console.error)
+          update_titulo(payload)
         })
         break
 
@@ -70,9 +71,7 @@ class LicoesStore extends EventEmitter {
         // payload = Licao
         this.change(() => {
           this._licoes = Immutable.Push(this._licoes, payload)
-          LicaoService.inserir(payload)
-            .then(console.info)
-            .catch(console.error)
+          inserir(payload)
         })
         break
 
@@ -80,9 +79,7 @@ class LicoesStore extends EventEmitter {
         // payload = {id, categoria_id}
         this.change(() => {
           licao.categoria_id = payload.categoria_id
-          LicaoService.updateTitulo(payload)
-            .then(console.info)
-            .catch(console.error)
+          update_titulo(payload)
         })
         break
 
@@ -90,9 +87,7 @@ class LicoesStore extends EventEmitter {
         // payload = id
         this.change(() => {
           this._licoes = Immutable.Delete(this._licoes, this._licoes.findIndexOfObj('id', payload))
-          LicaoService.delete(payload)
-            .then(console.info)
-            .catch(console.error)
+          remove(payload)
         })
         break
 
