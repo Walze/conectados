@@ -50,10 +50,6 @@ class Licao extends Component {
 		this.setState({ editNomeBool, edit: this.props.licao })
 	}
 
-	componentDidMount() {
-
-	}
-
 	handleCatChange(e) {
 		LicoesActions.updateCat({
 			id: this.props.licao.id,
