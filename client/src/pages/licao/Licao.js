@@ -36,19 +36,7 @@ class Licao extends Component {
 		this.setState({ newCard })
 	}
 
-	createCard() {
-		addCard(this.state.newCard)
-	}
-
-	edit(e) {
-		const edit = Object.assign({}, this.state.edit)
-		edit[e.target.name] = e.target.value
-		this.setState({ edit })
-	}
-
-	editNomeHandler(e, editNomeBool = false) {
-		this.setState({ editNomeBool, edit: this.props.licao })
-	}
+	createCard() { addCard(this.state.newCard) }
 
 	handleCatChange(e) {
 		LicoesActions.updateCat({
@@ -60,6 +48,13 @@ class Licao extends Component {
 	deleteLicao() {
 		LicoesActions.deleteLicao(this.props.licao.id)
 		popUp.close(this.props.popUp.state.id)
+	}
+
+	editNomeHandler(e, openBool) {
+		if (openBool)
+			this.setState({ editNomeBool: openBool })
+		else
+			this.setState({ editNomeBool: openBool })
 	}
 
 	render() {
@@ -187,9 +182,9 @@ class Licao extends Component {
 							</small>
 							<div hidden={!this.state.editNomeBool}>
 								<div className='d-flex align-items-center justify-content-center flex-column' >
-									
-									<button style={{ width: '100%' }} className='btn btn-success mb-4'>Salvar</button>
-									<button style={{ width: '100%' }} className='btn btn-danger'>Cancelar</button>
+
+									<button onClick={e => this.editNomeHandler(e, true)} style={{ width: '100%' }} className='btn btn-success mb-4'>Salvar</button>
+									<button onClick={e => this.editNomeHandler(e, false)} style={{ width: '100%' }} className='btn btn-danger'>Cancelar</button>
 
 								</div>
 							</div>

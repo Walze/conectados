@@ -46,86 +46,110 @@ class LicoesStore extends EventEmitter {
     this._licoes.map(licao => licao.cards.sortCards(sortFunc))
   }
 
+
+
   handleActions(action) {
     const payload = action.payload
     const licao = this.find(payload.licao_id) || this.find(payload.id)
     let cardIndex
 
-    if (licao)
-      cardIndex = licao.cards.findIndexOfObj('id', payload.id)
-
-
-    const { remove, update_titulo, inserir } = LicaoService
+    if (licao) cardIndex = licao.cards.findIndexOfObj('id', payload.id)
 
     switch (action.type) {
       case 'UPDATE_TITULO':
-        this.change(() => {
-          // payload = Licao          
-          licao.titulo = payload.titulo
-          licao.desc = payload.desc
-          update_titulo(payload)
-        })
+        this.update_titulo(licao, payload);
         break
 
       case 'ADD_LICAO':
         // payload = Licao
-        this.change(() => {
-          this._licoes = Immutable.Push(this._licoes, payload)
-          inserir(payload)
-        })
+        this.add_licao(payload);
         break
 
       case 'LICAO_UPDATE_CAT':
         // payload = {id, categoria_id}
-        this.change(() => {
-          licao.categoria_id = payload.categoria_id
-          update_titulo(payload)
-        })
+        this.licao_update_cat(licao, payload);
         break
 
       case 'DELETE_LICAO':
         // payload = id
-        this.change(() => {
-          this._licoes = Immutable.Delete(this._licoes, this._licoes.findIndexOfObj('id', payload))
-          remove(payload)
-        })
+        this.delete_licao(payload);
         break
 
       case 'ADD_CARD':
-        this.change(() =>
-          licao.cards = Immutable.Push(licao.cards, payload)
-        )
+        // payload = Card
+        this.add_card(licao, payload);
         break
 
       case 'UPDATE_CARD':
-        this.change(() => licao.cards[cardIndex] = payload)
+        this.update_card(licao, cardIndex, payload);
         break
 
       case 'DELETE_CARD':
-        this.change(() =>
-          licao.cards = Immutable.Delete(licao.cards, licao.cards.findIndexOfObj('id', payload.id))
-        )
+        this.delete_card(licao, payload);
         break
 
       case 'SWAP_POS':
         // payload = {from, to}
-        this.change(() => {
-          if (payload.from !== 0 && payload.to !== 0) {
-
-            const cardFrom = licao.cards.findObj('pos', payload.from)
-            const cardTo = licao.cards.findObj('pos', payload.to)
-
-            let temp = cardFrom.pos
-            cardFrom.pos = cardTo.pos
-            cardTo.pos = temp
-
-            this.sortCards()
-          }
-        })
+        this.swap_pos(payload, licao);
         break
 
       default: break
     }
+  }
+
+  swap_pos(payload, licao) {
+    this.change(() => {
+      if (payload.from !== 0 && payload.to !== 0) {
+        const cardFrom = licao.cards.findObj('pos', payload.from);
+        const cardTo = licao.cards.findObj('pos', payload.to);
+        let temp = cardFrom.pos;
+        cardFrom.pos = cardTo.pos;
+        cardTo.pos = temp;
+        this.sortCards();
+      }
+    });
+  }
+
+  delete_card(licao, payload) {
+    this.change(() => licao.cards = Immutable.Delete(licao.cards, licao.cards.findIndexOfObj('id', payload.id)));
+  }
+
+  update_card(licao, cardIndex, payload) {
+    this.change(() => licao.cards[cardIndex] = payload);
+  }
+
+  add_card(licao, payload) {
+    this.change(() => licao.cards = Immutable.Push(licao.cards, payload));
+  }
+
+  delete_licao(payload) {
+    this.change(() => {
+      this._licoes = Immutable.Delete(this._licoes, this._licoes.findIndexOfObj('id', payload));
+      LicaoService.remove(payload);
+    });
+  }
+
+  licao_update_cat(licao, payload) {
+    this.change(() => {
+      licao.categoria_id = payload.categoria_id;
+      LicaoService.update_titulo(payload);
+    });
+  }
+
+  add_licao(payload) {
+    this.change(() => {
+      this._licoes = Immutable.Push(this._licoes, payload);
+      LicaoService.inserir(payload);
+    });
+  }
+
+  update_titulo(licao, payload) {
+    this.change(() => {
+      // payload = Licao          
+      licao.titulo = payload.titulo;
+      licao.desc = payload.desc;
+      LicaoService.update_titulo(payload);
+    });
   }
 }
 
