@@ -1,22 +1,13 @@
-import dispatcher from '../dispatcher'
+import dispatch_emmiter from './dispatch_emmiter'
 
 export function createCat(payload) {
-  dispatcher.dispatch({
-    type: 'CREATE_CAT',
-    payload
-  })
+  dispatch_emmiter('CREATE_CAT', payload);
 }
 
 export function updateCat(payload) {
-  dispatcher.dispatch({
-    type: 'UPDATE_CAT',
-    payload
-  })
+  dispatch_emmiter('UPDATE_CAT', payload);
 }
 
 export function deleteCat(payload) {
-  dispatcher.dispatch({
-    type: 'DELETE_CAT',
-    payload
-  })
+  dispatch_emmiter('DELETE_CAT', payload);
 }

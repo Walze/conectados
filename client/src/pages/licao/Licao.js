@@ -22,7 +22,7 @@ class Licao extends Component {
 		window.licao = this
 	}
 
-	handleChange(e, index = null) {
+	handleCardChange(e, index = null) {
 		let newCard = Object.assign({}, this.state.newCard)
 
 		if (e.target.name !== 'images')
@@ -36,8 +36,6 @@ class Licao extends Component {
 		this.setState({ newCard })
 	}
 
-	createCard() { addCard(this.state.newCard) }
-
 	handleCatChange(e) {
 		LicoesActions.updateCat({
 			id: this.props.licao.id,
@@ -45,16 +43,38 @@ class Licao extends Component {
 		})
 	}
 
+	handleLicaoChange(e) {
+		const edit = Object.assign({}, this.state.edit);
+		edit[e.target.name] = e.target.value
+
+		this.setState({ edit })
+	}
+
+	createCard() { addCard(this.state.newCard) }
+
 	deleteLicao() {
 		LicoesActions.deleteLicao(this.props.licao.id)
 		popUp.close(this.props.popUp.state.id)
 	}
 
 	editNomeHandler(e, openBool) {
-		if (openBool)
-			this.setState({ editNomeBool: openBool })
+		const newStates = {
+			editNomeBool: openBool,
+			edit: this.props.licao,
+			editDefault: this.props.licao
+		}
+
+		if (e.target === this.refs.salvarBtn) {
+			newStates.editDefault = this.state.edit
+			console.warn(this.state.edit)
+			LicoesActions.updateTitulo(this.state.edit)
+		}
 		else
-			this.setState({ editNomeBool: openBool })
+			if (!openBool)
+				newStates.edit = this.state.editDefault
+
+
+		this.setState(newStates)
 	}
 
 	render() {
@@ -94,7 +114,7 @@ class Licao extends Component {
 							<div name='edit-fields'>
 								<input
 									ref='tituloInput'
-									onChange={e => this.edit(e)}
+									onChange={e => this.handleLicaoChange(e)}
 									name='titulo'
 									hidden={!this.state.editNomeBool}
 									className='form-control form-control-lg display-4 text-center mb-1'
@@ -103,7 +123,7 @@ class Licao extends Component {
 
 								<textarea
 									ref='descInput'
-									onChange={e => this.edit(e)}
+									onChange={e => this.handleLicaoChange(e)}
 									name='desc'
 									hidden={!this.state.editNomeBool}
 									className='form-control display-4 text-center'
@@ -126,9 +146,7 @@ class Licao extends Component {
 								<div className='d-flex justify-content-center'>
 									<div className='m-4 col-sm-12'>
 										<h5 className='mb-0 text-center'>
-											<b>
-												Criar novo card
-                      </b>
+											<b> Criar novo card </b>
 										</h5>
 										<small className='text-center form-text text-muted mb-3 mt-1'></small>
 										<div className='form-group'>
@@ -139,7 +157,7 @@ class Licao extends Component {
 												name='text'
 												placeholder='Texto'
 												value={this.state.newCard.text}
-												onChange={e => this.handleChange(e)}
+												onChange={e => this.handleCardChange(e)}
 											/>
 
 											<div className="mb-1">
@@ -147,7 +165,7 @@ class Licao extends Component {
 													type="file"
 													name='images'
 													value={this.state.newCard.images[0]}
-													onChange={e => this.handleChange(e, 0)}
+													onChange={e => this.handleCardChange(e, 0)}
 												/>
 											</div>
 
@@ -183,7 +201,7 @@ class Licao extends Component {
 							<div hidden={!this.state.editNomeBool}>
 								<div className='d-flex align-items-center justify-content-center flex-column' >
 
-									<button onClick={e => this.editNomeHandler(e, true)} style={{ width: '100%' }} className='btn btn-success mb-4'>Salvar</button>
+									<button ref='salvarBtn' onClick={e => this.editNomeHandler(e, false)} style={{ width: '100%' }} className='btn btn-success mb-4'>Salvar</button>
 									<button onClick={e => this.editNomeHandler(e, false)} style={{ width: '100%' }} className='btn btn-danger'>Cancelar</button>
 
 								</div>

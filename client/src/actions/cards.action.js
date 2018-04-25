@@ -1,29 +1,17 @@
-import dispatcher from '../dispatcher'
+import dispatch_emmiter from './dispatch_emmiter'
 
 export function add(payload) {
-  dispatcher.dispatch({
-    type: 'ADD_CARD',
-    payload
-  })
+  dispatch_emmiter('ADD_CARD', payload);
 }
 
 export function updateCard(payload) {
-  dispatcher.dispatch({
-    type: 'UPDATE_CARD',
-    payload
-  })
+  dispatch_emmiter('UPDATE_CARD', payload);
 }
 
 export function deleteCard(payload) {
-  dispatcher.dispatch({
-    type: 'DELETE_CARD',
-    payload
-  })
+  dispatch_emmiter('DELETE_CARD', payload);
 }
 
 export function swapPos(payload) {
-  dispatcher.dispatch({
-    type: 'SWAP_POS',
-    payload
-  })
+  dispatch_emmiter('SWAP_POS', payload);
 }

@@ -1,15 +1,9 @@
-import dispatcher from '../dispatcher'
+import dispatch_emmiter from './dispatch_emmiter'
 
-export function open(id) {
-  dispatcher.dispatch({
-    type: 'OPEN_POPUP',
-    payload: id
-  })
+export function open(payload) {
+  dispatch_emmiter('OPEN_POPUP', payload);
 }
 
-export function close(id) {
-  dispatcher.dispatch({
-    type: 'CLOSE_POPUP',
-    payload: id
-  })
+export function close(payload) {
+  dispatch_emmiter('CLOSE_POPUP', payload);
 }
