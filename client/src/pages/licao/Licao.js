@@ -66,7 +66,6 @@ class Licao extends Component {
 
 		if (e.target === this.refs.salvarBtn) {
 			newStates.editDefault = this.state.edit
-			console.warn(this.state.edit)
 			LicoesActions.updateTitulo(this.state.edit)
 		}
 		else

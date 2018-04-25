@@ -1,10 +1,7 @@
 import { Licao, Card } from '../interfaces'
 import axios from 'axios'
+import { log, handle_error } from './helpers.service';
 
-function handle_error(...args) {
-  console.error(...args)
-  alert('Erro! Veja o console.')
-}
 
 const API = 'http://localhost:3001'
 
@@ -18,24 +15,32 @@ class LicaoService {
           licao.cards = licao.cards.map(card => card = new Card(card))
           return licao
         })
-      ).catch(handle_error)
+      )
+      .then(log)
+      .catch(handle_error)
   }
 
   static inserir(licao) {
     delete licao.id
     delete licao.cards
 
-    return axios.post(`${API}/licao`, licao).catch(handle_error)
+    return axios.post(`${API}/licao`, licao)
+      .then(log)
+      .catch(handle_error)
   }
 
   static remove(id) {
-    return axios.delete(`${API}/licao/${id}`).catch(handle_error)
+    return axios.delete(`${API}/licao/${id}`)
+      .then(log)
+      .catch(handle_error)
   }
 
   static update_titulo(changes) {
     delete changes.cards
 
-    return axios.put(`${API}/licao/${changes.id}`, changes).catch(handle_error)
+    return axios.put(`${API}/licao/${changes.id}`, changes)
+      .then(log)
+      .catch(handle_error)
   }
 
 }
