@@ -9,7 +9,6 @@ class Licoes extends Component {
 
   constructor() {
     super()
-
     this.state = {
       licoes: licoesStore.get(),
       activeLicao: new LicaoInterface(),
@@ -20,6 +19,7 @@ class Licoes extends Component {
 
   componentDidMount() {
     licoesStore.on('changes', () => {
+      console.warn(licoesStore.get())
       this.setState({ licoes: licoesStore.get() })
     })
   }

@@ -1,6 +1,6 @@
 import { Licao, Card } from '../interfaces'
 import axios from 'axios'
-import { log, handle_error } from './helpers.service';
+import { handle_error } from './helpers.service';
 
 
 const API = 'http://localhost:3001'
@@ -16,7 +16,6 @@ class LicaoService {
           return licao
         })
       )
-      .then(log)
       .catch(handle_error)
   }
 
@@ -25,13 +24,11 @@ class LicaoService {
     delete licao.cards
 
     return axios.post(`${API}/licao`, licao)
-      .then(log)
       .catch(handle_error)
   }
 
   static remove(id) {
     return axios.delete(`${API}/licao/${id}`)
-      .then(log)
       .catch(handle_error)
   }
 
@@ -39,7 +36,6 @@ class LicaoService {
     delete changes.cards
 
     return axios.put(`${API}/licao/${changes.id}`, changes)
-      .then(log)
       .catch(handle_error)
   }
 

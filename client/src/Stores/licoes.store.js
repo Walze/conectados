@@ -9,7 +9,6 @@ class LicoesStore extends EventEmitter {
     super()
 
     this._licoes = []
-
     this.fetchAPI()
 
     window.licoes = this
@@ -18,7 +17,12 @@ class LicoesStore extends EventEmitter {
   fetchAPI() {
     LicaoService
       .all()
-      .then(licoes => this.change(() => this._licoes = licoes))
+      .then(licoes => {
+        this.change(() => {
+          console.log(licoes)
+          this._licoes = licoes
+        })
+      })
   }
 
   find(id) {
@@ -26,7 +30,8 @@ class LicoesStore extends EventEmitter {
   }
 
   get() {
-    return [...this._licoes]
+    console.warn(this._licoes)
+    return this._licoes
   }
 
   change(fn) {
