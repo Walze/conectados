@@ -26,8 +26,7 @@ const TABLES = ['licao', 'categoria', 'card', 'imagens']
 app.get('/licao', LicaoController.all)
 app.get('/licao/:id', LicaoController.find)
 
-
-
+const db = require('./DB')
 
 TABLES.map(table => crud(table, app))
 

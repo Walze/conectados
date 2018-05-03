@@ -1,49 +1,48 @@
 const db = require('../DB')
 
 
-function Crud_Listener(table, express_instance) {
-
+function CrudListener(table, express) {
   //all
-  express_instance.get(`/${table}`, (req, res) => {
+  express.get(`/${table}`, function (request, response) {
     db.all(table)
-      .then(res.jsonp)
-      .catch(res.jsonp)
+      .then(res => response.send(res))
+      .catch(res => response.send(res))
   })
 
   //id
-  express_instance.get(`/${table}/:id`, (req, res) => {
+  express.get(`/${table}/:id`, function (request, response) {
     db.id(table, req.params.id)
-      .then(res.jsonp)
-      .catch(res.jsonp)
+      .then(res => response.send(res))
+      .catch(res => response.send(res))
   })
 
   //find
-  express_instance.post(`/${table}/find`, (req, res) => {
+  express.post(`/${table}/find`, function (request, response) {
     db.find(table, req.body)
-      .then(res.jsonp)
-      .catch(res.jsonp)
+      .then(res => response.send(res))
+      .catch(res => response.send(res))
   })
 
   //insert
-  express_instance.post(`/${table}`, (req, res) => {
+  express.post(`/${table}`, function (request, response) {
     db.insert(table, req.body)
-      .then(res.jsonp)
-      .catch(res.jsonp)
+      .then(res => response.send(res))
+      .catch(res => response.send(res))
   })
 
   //update
-  express_instance.put(`/${table}/:id`, (req, res) => {
+  express.put(`/${table}/:id`, function (request, response) {
     db.update(table, req.body, { id: req.params.id })
-      .then(res.jsonp)
-      .catch(res.jsonp)
+      .then(res => response.send(res))
+      .catch(res => response.send(res))
   })
 
   //delete
-  express_instance.delete(`/${table}/:id`, (req, res) => {
+  express.delete(`/${table}/:id`, function (request, response) {
     db.delete(table, { id: Number(req.params.id) })
-      .then(res.jsonp)
-      .catch(res.jsonp)
+      .then(res => response.send(res))
+      .catch(res => response.send(res))
   })
 }
 
-module.exports = Crud_Listener
+module.exports = CrudListener
