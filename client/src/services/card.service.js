@@ -18,6 +18,10 @@ export default class CardService {
       .catch(handle_error)
   }
 
+  static swapPos(licao, pos) {
+    console.log(licao, pos)
+  }
+
 }
 
 

@@ -16,6 +16,8 @@ class Card extends React.Component {
         to: 0
       }
     }
+
+    window.card = this
   }
 
   changeUpdate(e) {
@@ -47,7 +49,7 @@ class Card extends React.Component {
 
   render() {
     const condition =
-      this.updateCard.id !== 0 &&
+      this.props.card.id !== 0 &&
       (
         this.props.card.id !== this.updateCard.id ||
         this.props.card.licao_id !== this.updateCard.licao_id
@@ -60,7 +62,7 @@ class Card extends React.Component {
       <div>
         <h4 className='text-center mb-2'>
           <b>
-            Card #{this.updateCard.id}
+            Card #{this.updateCard.pos}
           </b>
         </h4>
 

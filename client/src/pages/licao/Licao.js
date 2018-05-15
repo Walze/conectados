@@ -52,6 +52,7 @@ class Licao extends Component {
 
 	createCard() {
 		addCard(new Card(this.state.newCard))
+		popUp.close(this.refs.newCardPopup.state.id)
 	}
 
 	deleteLicao() {

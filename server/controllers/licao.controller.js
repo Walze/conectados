@@ -9,7 +9,12 @@ module.exports = {
         db.run(queryCards).then(cards => {
 
           licoes.map(licao =>
-            licao.cards = cards.filter(card => card.licao_id === licao.id)
+            licao.cards = cards
+              .filter(card => card.licao_id === licao.id)
+              .map(card => {
+                card.images = card.images ? card.images : []
+                return card
+              })
           )
           res.send(licoes)
 

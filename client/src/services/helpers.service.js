@@ -1,5 +1,5 @@
-export function handle_error(...args) {
-  console.error(...args)
+export function handle_error(err) {
+  console.error(err.message, err)
   alert('Erro! Veja o console.')
 }
 

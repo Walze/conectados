@@ -48,7 +48,7 @@ class LicoesStore extends EventEmitter {
       return 0
     }
 
-    this._licoes.map(licao => licao.cards.sortCards(sortFunc))
+    this._licoes.map(licao => licao.cards.sort(sortFunc))
   }
 
 
@@ -107,9 +107,15 @@ class LicoesStore extends EventEmitter {
       if (payload.from !== 0 && payload.to !== 0) {
         const cardFrom = licao.cards.findObj('pos', payload.from);
         const cardTo = licao.cards.findObj('pos', payload.to);
-        let temp = cardFrom.pos;
-        cardFrom.pos = cardTo.pos;
-        cardTo.pos = temp;
+
+        if (cardTo) {
+          let temp = cardFrom.pos;
+          cardFrom.pos = cardTo.pos;
+          cardTo.pos = temp;
+        } else
+          cardFrom.pos = payload.to;
+
+        CardService.swapPos(licao, payload)
         this.sortCards();
       }
     });
