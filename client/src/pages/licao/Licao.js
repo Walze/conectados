@@ -50,7 +50,9 @@ class Licao extends Component {
 		this.setState({ edit })
 	}
 
-	createCard() { addCard(this.state.newCard) }
+	createCard() {
+		addCard(new Card(this.state.newCard))
+	}
 
 	deleteLicao() {
 		LicoesActions.deleteLicao(this.props.licao.id)

@@ -2,6 +2,7 @@ import dispatcher from '../dispatcher'
 import { EventEmitter } from 'events'
 import { Immutable } from '../Helpers'
 import LicaoService from '../services/licao.service'
+import CardService from '../services/card.service'
 
 class LicoesStore extends EventEmitter {
 
@@ -30,8 +31,7 @@ class LicoesStore extends EventEmitter {
   }
 
   get() {
-    console.warn(this._licoes)
-    return this._licoes
+    return [...this._licoes]
   }
 
   change(fn) {
@@ -124,7 +124,9 @@ class LicoesStore extends EventEmitter {
   }
 
   add_card(licao, payload) {
+    payload.pos = licao.cards.length + 1
     this.change(() => licao.cards = Immutable.Push(licao.cards, payload));
+    CardService.insert(payload)
   }
 
   delete_licao(payload) {

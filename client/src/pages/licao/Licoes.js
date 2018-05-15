@@ -19,7 +19,6 @@ class Licoes extends Component {
 
   componentDidMount() {
     licoesStore.on('changes', () => {
-      console.warn(licoesStore.get())
       this.setState({ licoes: licoesStore.get() })
     })
   }

@@ -6,42 +6,42 @@ function CrudListener(table, express) {
   express.get(`/${table}`, function (request, response) {
     db.all(table)
       .then(res => response.send(res))
-      .catch(res => response.send(res))
+      .catch(res => response.sendStatus(409).send(res))
   })
 
   //id
   express.get(`/${table}/:id`, function (request, response) {
-    db.id(table, req.params.id)
+    db.id(table, request.params.id)
       .then(res => response.send(res))
-      .catch(res => response.send(res))
+      .catch(res => response.sendStatus(409).send(res))
   })
 
   //find
   express.post(`/${table}/find`, function (request, response) {
-    db.find(table, req.body)
+    db.find(table, request.body)
       .then(res => response.send(res))
-      .catch(res => response.send(res))
+      .catch(res => response.sendStatus(409).send(res))
   })
 
   //insert
   express.post(`/${table}`, function (request, response) {
-    db.insert(table, req.body)
+    db.insert(table, request.body)
       .then(res => response.send(res))
-      .catch(res => response.send(res))
+      .catch(res => response.sendStatus(409).send(res))
   })
 
   //update
   express.put(`/${table}/:id`, function (request, response) {
-    db.update(table, req.body, { id: req.params.id })
+    db.update(table, request.body, { id: request.params.id })
       .then(res => response.send(res))
-      .catch(res => response.send(res))
+      .catch(res => response.sendStatus(409).send(res))
   })
 
   //delete
   express.delete(`/${table}/:id`, function (request, response) {
-    db.delete(table, { id: Number(req.params.id) })
+    db.delete(table, { id: Number(request.params.id) })
       .then(res => response.send(res))
-      .catch(res => response.send(res))
+      .catch(res => response.sendStatus(409).send(res))
   })
 }
 
