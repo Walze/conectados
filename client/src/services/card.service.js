@@ -18,8 +18,10 @@ export default class CardService {
       .catch(handle_error)
   }
 
-  static swapPos(licao, pos) {
-    console.log(licao, pos)
+  static swapPos(licao, posData) {
+    return axios.post(`${API}/cardswap`, posData)
+      .then(console.log)
+      .catch(handle_error)
   }
 
 }

@@ -13,7 +13,8 @@ class Card extends React.Component {
       swap: {
         licao_id: 0,
         from: 0,
-        to: 0
+        to: 0,
+        card_id: 0
       }
     }
 
@@ -30,6 +31,7 @@ class Card extends React.Component {
     let swap = Object.assign({}, this.state.swap)
     swap.from = this.props.card.pos
     swap.licao_id = this.props.card.licao_id
+    swap.card_id = this.props.card.id
 
     swap[e.target.name] = Number(e.target.value)
 
